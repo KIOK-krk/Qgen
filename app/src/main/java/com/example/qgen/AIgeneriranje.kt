@@ -111,10 +111,10 @@ fun ListaPitanja() {
     Column{
         Row {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null,
-                tint = Color(0xFF1c93b8))
+                tint = Color(0xFF1c81b8))
             Spacer(modifier = Modifier.weight(1f))
             Icon(imageVector = Icons.Default.Create, contentDescription = null,
-                tint = Color(0xFF1c93b8))
+                tint = Color(0xFF1c81b8))
         }
         LazyColumn {
             items(15) {
@@ -139,7 +139,7 @@ fun ListaPitanja() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(imageVector = Icons.Default.Add, contentDescription = null,
-                            tint = Color(0xFF1c93b8),
+                            tint = Color(0xFF1c81b8),
                             modifier = Modifier
                                 .padding(top = 4.dp, end = 8.dp)
                         )
