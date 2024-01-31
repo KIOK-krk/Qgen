@@ -135,13 +135,13 @@ fun ListaPitanja() {
                     ){
                         Text("Pitanje $it",
                             modifier = Modifier
-                                .padding(top = 4.dp, start = 8.dp)
+                                .padding(top = 4.dp, start = 25.dp)
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(imageVector = Icons.Default.Add, contentDescription = null,
                             tint = Color(0xFF1c81b8),
                             modifier = Modifier
-                                .padding(top = 4.dp, end = 8.dp)
+                                .padding(top = 4.dp, end = 15.dp)
                         )
                     }
                 }
