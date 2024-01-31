@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.alexstyl.swipeablecard.ExperimentalSwipeableCardApi
 import com.alexstyl.swipeablecard.rememberSwipeableCardState
 import com.alexstyl.swipeablecard.swipableCard
@@ -105,6 +107,12 @@ fun AIgeneriranje() {
 
     }
 }
+@Preview
+@Composable
+fun AIgeneriranjePreview(){
+    AIgeneriranje()
+}
+
 
 @Composable
 fun ListaPitanja() {
@@ -154,4 +162,139 @@ fun ListaPitanja() {
 @Composable
 fun ListaPitanjaPreview(){
     ListaPitanja()
+}
+
+@Composable
+fun ListaPredmeta(){
+    Column {
+        Row{
+            Text(text = "Predmeti",
+                fontSize = 25.sp,
+                modifier = Modifier
+                    .padding(all =10.dp)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(text = "5. Razred",
+                fontSize = 17.sp,
+                modifier = Modifier
+                    .padding(end =10.dp,
+                        start =10.dp,
+                        bottom =10.dp,
+                top =15.dp,)
+            )
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Matematika",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Hrvatski Jezik",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Povijest",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Geografija",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+    }
+}
+@Preview
+@Composable
+fun ListaPredmetaPreview(){
+    ListaPredmeta()
 }
