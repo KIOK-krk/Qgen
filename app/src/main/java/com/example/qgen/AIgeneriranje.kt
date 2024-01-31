@@ -165,7 +165,7 @@ fun ListaPitanjaPreview(){
 }
 
 @Composable
-fun ListaPredmeta(){
+fun ListaLekcija(){
     Column {
         Row{
             Text(text = "Predmeti",
@@ -181,6 +181,145 @@ fun ListaPredmeta(){
                         start =10.dp,
                         bottom =10.dp,
                 top =15.dp,)
+            )
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Geometrija",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Razlomci",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("neka lekcija ne znam",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+        Card(
+            shape = RoundedCornerShape(
+                7.dp
+            ),
+            elevation = CardDefaults.cardElevation(
+                5.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(vertical = 3.5.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text("Ponavljanje",
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 25.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 4.dp, end = 15.dp)
+                )
+            }
+        }
+    }
+}
+@Preview
+@Composable
+fun ListaLekcijaPreview(){
+    ListaLekcija()
+}
+@Preview
+@Composable
+fun ListaPredmetaPreview(){
+    ListaPredmeta()
+}
+@Composable
+fun ListaPredmeta(){
+    Column {
+        Row{
+            Text(text = "Predmeti",
+                fontSize = 25.sp,
+                modifier = Modifier
+                    .padding(all =10.dp)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(text = "5. Razred",
+                fontSize = 17.sp,
+                modifier = Modifier
+                    .padding(end =10.dp,
+                        start =10.dp,
+                        bottom =10.dp,
+                        top =15.dp,)
             )
         }
         Card(
@@ -293,8 +432,4 @@ fun ListaPredmeta(){
         }
     }
 }
-@Preview
-@Composable
-fun ListaPredmetaPreview(){
-    ListaPredmeta()
-}
+
