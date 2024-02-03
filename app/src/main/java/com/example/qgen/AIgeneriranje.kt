@@ -39,7 +39,7 @@ fun AIgeneriranje() {
     ) {
         Card {
             Text("Pitanje")
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color.Black),
@@ -47,7 +47,7 @@ fun AIgeneriranje() {
                 onValueChange = { /*TODO*/ }
             )
             Text("odgovor1")
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color.Black)
@@ -56,7 +56,7 @@ fun AIgeneriranje() {
                 onValueChange = { /*TODO*/ }
             )
             Text("odgovor1")
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color.Black)
@@ -65,7 +65,7 @@ fun AIgeneriranje() {
                 onValueChange = { /*TODO*/ }
             )
             Text("odgovor1")
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color.Black)
@@ -74,7 +74,7 @@ fun AIgeneriranje() {
                 onValueChange = { /*TODO*/ }
             )
             Text("Pitanje")
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color.Black),
