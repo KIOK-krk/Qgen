@@ -38,6 +38,7 @@ fun NavigiranjeEkrana() {
         composable("ListaPredmeta") { ListaPredmeta(navigiranjeEkrana) }
         composable("AIgeneriranje") { AIgeneriranje(navigiranjeEkrana) }
         composable( "PredmetiEkran") { PredmetiEkran(navigiranjeEkrana) }
+        composable( "ListaPitanja") { ListaPitanja(navigiranjeEkrana) }
     }
 }
 @Preview
