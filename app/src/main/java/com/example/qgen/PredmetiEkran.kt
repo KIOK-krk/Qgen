@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -31,6 +32,7 @@ fun PredmetiEkran(
     viewModel: PredmetiViewModel = viewModel()
 ) {
     val predmeti = viewModel.sviPredmet.collectAsState().value
+    val lekcije = viewModel.sveLekcije.collectAsState().value
 
     Column {
         Row {
@@ -55,14 +57,14 @@ fun PredmetiEkran(
         }
         LazyColumn() {
             items(predmeti) { predmet ->
-                PredmetKartica(predmet)
+                PredmetKartica(predmet, viewModel)
             }
         }
     }
 }
 
 @Composable
-fun PredmetKartica(predmet: Predmet) {
+fun PredmetKartica(predmet: Predmet, viewModel: PredmetiViewModel) {
     Card(
         shape = RoundedCornerShape(
             8.dp
@@ -71,22 +73,42 @@ fun PredmetKartica(predmet: Predmet) {
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(40.dp)
             .fillMaxWidth()
+            .clickable {
+                viewModel.togglePredmetProsiren(predmet.idPredmeta)
+            }
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                predmet.nazivPredmeta,
+        Column {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(top = 8.dp, bottom = 4.dp, start = 24.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                imageVector = Icons.Default.ArrowForward, contentDescription = null,
-                tint = Color(0xFF1c81b8),
-                modifier = Modifier
-                    .padding(top = 8.dp, end = 15.dp)
-            )
+                    .padding(all = 16.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    predmet.nazivPredmeta,
+                    modifier = Modifier
+                        .padding(top = 8.dp, bottom = 4.dp, start = 24.dp)
+                        .weight(1f)
+                )
+                Icon(
+                    imageVector = if (predmet.prosireno)Icons.Filled.ArrowDropDown else Icons.Filled.ArrowForward,
+                    contentDescription = null,
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 8.dp, end = 15.dp)
+                )
+            }
+            if(predmet.prosireno){
+                val lekcije = viewModel.sveLekcije.collectAsState().value
+                    .filter { it.predmetID == predmet.idPredmeta}
+                LazyColumn{
+                    items(lekcije){lekcija ->
+                        Text(text = lekcija.naziv,
+                            modifier = Modifier
+                                .padding(16.dp))
+                    }
+                }
+            }
         }
     }
 }
