@@ -33,9 +33,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavigiranjeEkrana() {
     val navigiranjeEkrana = rememberNavController()
-    NavHost(navController = navigiranjeEkrana, startDestination = "ListaPredmeta") {
+    NavHost(navController = navigiranjeEkrana, startDestination = "PredmetiEkran") {
         composable("ListaPredmeta") { ListaPredmeta(navigiranjeEkrana) }
-        composable("ListaPitanja") { ListaPitanja(navigiranjeEkrana) }
         composable("AIgeneriranje") { AIgeneriranje(navigiranjeEkrana) }
+        composable( "PredmetiEkran") { PredmetiEkran(navigiranjeEkrana) }
     }
 }
