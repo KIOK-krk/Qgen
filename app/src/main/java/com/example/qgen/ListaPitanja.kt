@@ -13,10 +13,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -31,28 +30,44 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun ListaPitanja(navigiranjeEkrana: NavHostController) {
-    Column{
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+    ) {
         Row {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null,
-                tint = Color(0xFF1c81b8)
+            Icon(
+                imageVector = Icons.Default.ArrowBack, contentDescription = null,
+                tint = Color(0xFF1c81b8),
+                modifier = Modifier
+                    .padding(top = 16.dp,bottom = 8.dp)
             )
+            Text("Naslov Lekcije",
+                modifier = Modifier
+                    .padding(top=16.dp,start = 8.dp))
+
             Spacer(modifier = Modifier.weight(1f))
-            Icon(imageVector = Icons.Default.Create, contentDescription = null,
-                tint = Color(0xFF1c81b8)
+            Icon(
+                imageVector = Icons.Default.Build, contentDescription = null,
+                tint = Color(0xFF1c81b8),
+                modifier = Modifier
+                    .padding(top = 16.dp, bottom = 8.dp,end = 12.dp)
+            )
+            Icon(
+                imageVector = Icons.Default.Create, contentDescription = null,
+                tint = Color(0xFF1c81b8),
+                modifier = Modifier
+                    .padding(top = 16.dp, bottom = 8.dp)
             )
         }
-        LazyColumn {
+        LazyColumn(verticalArrangement = Arrangement.Center) {
             items(15) {
                 Card(
                     shape = RoundedCornerShape(
                         7.dp
                     ),
-                    elevation = CardDefaults.cardElevation(
-                        5.dp
-                    ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(40.dp)
+                        .height(50.dp)
                         .padding(vertical = 3.5.dp)
                 ) {
                     Row(
@@ -60,13 +75,13 @@ fun ListaPitanja(navigiranjeEkrana: NavHostController) {
                     ){
                         Text("Pitanje $it",
                             modifier = Modifier
-                                .padding(top = 4.dp, start = 25.dp)
+                                .padding(top = 9.dp, start = 25.dp)
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(imageVector = Icons.Default.Add, contentDescription = null,
                             tint = Color(0xFF1c81b8),
                             modifier = Modifier
-                                .padding(top = 4.dp, end = 15.dp)
+                                .padding(top = 10.dp, end = 15.dp)
                                 .clickable { navigiranjeEkrana.navigate("AIgeneriranje") }
                         )
                     }

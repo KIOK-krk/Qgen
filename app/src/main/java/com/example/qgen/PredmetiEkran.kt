@@ -70,8 +70,8 @@ fun PredmetKartica(predmet: Predmet, viewModel: PredmetiViewModel) {
             8.dp
         ),
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(40.dp)
+            .padding(horizontal = 16.dp)
+            .height(400.dp)
             .fillMaxWidth()
             .clickable {
                 viewModel.togglePredmetProsiren(predmet.idPredmeta)
