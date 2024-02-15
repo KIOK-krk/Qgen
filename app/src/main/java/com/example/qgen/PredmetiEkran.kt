@@ -13,6 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -55,7 +57,7 @@ fun PredmetiEkran(
                     )
             )
         }
-        LazyColumn() {
+        LazyColumn {
             items(predmeti) { predmet ->
                 PredmetKartica(predmet, viewModel)
             }
@@ -65,13 +67,14 @@ fun PredmetiEkran(
 
 @Composable
 fun PredmetKartica(predmet: Predmet, viewModel: PredmetiViewModel) {
+    var visina = 70
     Card(
         shape = RoundedCornerShape(
             8.dp
         ),
         modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .height(400.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .height(visina.dp)
             .fillMaxWidth()
             .clickable {
                 viewModel.togglePredmetProsiren(predmet.idPredmeta)
@@ -91,21 +94,23 @@ fun PredmetKartica(predmet: Predmet, viewModel: PredmetiViewModel) {
                         .weight(1f)
                 )
                 Icon(
-                    imageVector = if (predmet.prosireno)Icons.Filled.ArrowDropDown else Icons.Filled.ArrowForward,
+                    imageVector = if (predmet.prosireno) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                     contentDescription = null,
                     tint = Color(0xFF1c81b8),
                     modifier = Modifier
                         .padding(top = 8.dp, end = 15.dp)
                 )
             }
-            if(predmet.prosireno){
+            if (predmet.prosireno) {
                 val lekcije = viewModel.sveLekcije.collectAsState().value
-                    .filter { it.predmetID == predmet.idPredmeta}
-                LazyColumn{
-                    items(lekcije){lekcija ->
-                        Text(text = lekcija.naziv,
+                    .filter { it.predmetID == predmet.idPredmeta }
+                LazyColumn {
+                    items(lekcije) { lekcija ->
+                        Text(
+                            text = lekcija.naziv,
                             modifier = Modifier
-                                .padding(16.dp))
+                                .padding(16.dp)
+                        )
                     }
                 }
             }
