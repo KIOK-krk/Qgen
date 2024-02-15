@@ -34,3 +34,4 @@ fun LoginEkran(navigiranjeEkrana: NavHostController){
         }
     }
 }
+//a
