@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -44,7 +45,7 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
         val state = rememberSwipeableCardState()
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .wrapContentSize()
                 .padding(
                     start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp
                 )
@@ -83,6 +84,7 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                 Text("Odgovor 3")
                 PitanjeRow()
                 Text("Zanimljivost")
+
                 OutlinedTextField(
                     value = "Koji je najbitniji dio kompjutera?Koji je najbitniji dio kompjutera?",
                     onValueChange = {},
