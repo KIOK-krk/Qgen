@@ -60,7 +60,7 @@ fun ListaPitanja(navigiranjeEkrana: NavHostController) {
             )
         }
         LazyColumn(verticalArrangement = Arrangement.Center) {
-            items(15) {
+            items(31) {
                 Card(
                     shape = RoundedCornerShape(
                         7.dp

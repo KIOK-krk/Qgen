@@ -2,8 +2,8 @@ package com.example.qgen
 
 data class Lekcija(
     var idLekcije: String = "",
-    var naziv: String = "",
-    var predmetID: String = "",
+    var Naziv: String = "",
+    var PredmetID: String = "",
     var AIupute: String = "",
-    var razred: String = ""
+    var Razred: String = ""
 )

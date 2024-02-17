@@ -15,8 +15,13 @@ object DataRepository {
                 close(e)
                 return@addSnapshotListener
             }
-            val predmeti = snapshot?.documents?.mapNotNull { it.toObject((Predmet::class.java)) }.orEmpty()
+            val predmeti = snapshot?.documents?.mapNotNull { document ->
+                document.toObject(Predmet::class.java)?.apply {
+                    idPredmeta = document.id // Postavi idPredmeta na Firestore dokument ID
+                }
+            }.orEmpty()
             trySend(predmeti).isSuccess
+
         }
         awaitClose { slusajPromjene.remove() }
     }
@@ -27,7 +32,11 @@ object DataRepository {
                 close(e)
                 return@addSnapshotListener
             }
-            val lekcije = snapshot?.documents?.mapNotNull { it.toObject((Lekcija::class.java)) }.orEmpty()
+            val lekcije = snapshot?.documents?.mapNotNull { document ->
+                document.toObject(Lekcija::class.java)?.apply {
+                    idLekcije = document.id // Postavi idLekcije na Firestore dokument ID
+                }
+            }.orEmpty()
             trySend(lekcije).isSuccess
         }
         awaitClose { slusajPromjene.remove() }

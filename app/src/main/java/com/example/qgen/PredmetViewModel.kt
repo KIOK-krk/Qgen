@@ -1,5 +1,6 @@
 package com.example.qgen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,21 +18,34 @@ class PredmetiViewModel : ViewModel(){
             DataRepository.dohvatiPredmete().collect { predmetiList ->
                 predmeti.value = predmetiList
             }
-        }
-    }
-    fun dohvatiLekcijeZaPredmet(predmetID : String, razred: String){
-        viewModelScope.launch {
             DataRepository.dohvatiLekcije().collect { lekcijeList ->
-                lekcije.value = lekcijeList.filter { it.predmetID == predmetID && it.razred == razred }
+                lekcije.value = lekcijeList
             }
         }
     }
-    fun togglePredmetProsiren(predmetID: String) {
-        val noviPredmeti = predmeti.value.map { predmet ->
-            if (predmet.idPredmeta == predmetID) {
-                predmet.copy(prosireno = !predmet.prosireno)
-            } else predmet
+    fun dohvatiSveLekcije(){
+        viewModelScope.launch {
+            DataRepository.dohvatiLekcije().collect { lekcijeList ->
+                lekcije.value = lekcijeList //.filter { it.predmetID == predmetID && it.razred == razred }
+            }
+            Log.d("Lekcije", lekcije.value.toString())
         }
-        predmeti.value = noviPredmeti
+    }
+    fun togglePredmetProsiren(predmetID: String) {
+        // Kreiranje privremene liste za ažurirane predmete
+        val sviNoviPredmeti = mutableListOf<Predmet>()
+
+        // Iteracija kroz listu trenutnih predmeta
+        for (predmet in predmeti.value) {
+            if (predmet.idPredmeta == predmetID) {
+                // Ako je pronađen predmet s odgovarajućim ID-om, invertiramo njegovo prosireno stanje
+                sviNoviPredmeti.add(predmet.copy(prosireno = !predmet.prosireno))
+            } else {
+                // Ako predmet nema odgovarajući ID, samo ga dodamo u listu
+                sviNoviPredmeti.add(predmet)
+            }
+        }
+        // Ažuriranje stanja predmeta s novom listom
+        predmeti.value = sviNoviPredmeti
     }
 }
