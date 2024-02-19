@@ -23,13 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun ListaPitanja(navigiranjeEkrana: NavHostController) {
+fun ListaPitanja(navigiranjeEkrana: NavHostController, naslov: String?) {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -39,11 +37,15 @@ fun ListaPitanja(navigiranjeEkrana: NavHostController) {
                 imageVector = Icons.Default.ArrowBack, contentDescription = null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 16.dp,bottom = 8.dp)
+                    .padding(top = 16.dp, bottom = 8.dp)
             )
-            Text("Naslov Lekcije",
-                modifier = Modifier
-                    .padding(top=16.dp,start = 8.dp))
+            //if (naslov != null) {
+                Text(
+                    "naslov",
+                    modifier = Modifier
+                        .padding(top = 16.dp, start = 8.dp)
+                )
+            //}
 
             Spacer(modifier = Modifier.weight(1f))
             Icon(
@@ -99,12 +101,6 @@ fun ListaPitanja(navigiranjeEkrana: NavHostController) {
                 .padding(bottom = 16.dp,end = 16.dp)
         )
     }
-}
-@Preview
-@Composable
-fun ListaPitanjaPreview(){
-    ListaPitanja(rememberNavController())
-
 }
 
 
