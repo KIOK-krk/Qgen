@@ -79,7 +79,7 @@ fun PredmetKartica(predmet: Predmet,navigiranjeEkrana:NavHostController, viewMod
             )
             if (predmet.prosireno) {
                 lekcije.forEach { lekcija ->
-                    karticaLekcija(nazivLekcije = lekcija.Naziv, navigiranjeEkrana = navigiranjeEkrana)
+                    karticaLekcija(nazivLekcije = lekcija.Naziv, navigiranjeEkrana = navigiranjeEkrana,idLekcije = lekcija.idLekcije)
                 }
             }
         }
@@ -89,13 +89,14 @@ fun PredmetKartica(predmet: Predmet,navigiranjeEkrana:NavHostController, viewMod
 @Composable
 fun karticaLekcija(
     nazivLekcije: String,
-    navigiranjeEkrana: NavHostController
+    navigiranjeEkrana: NavHostController,
+    idLekcije: String
 ) {
     Text(
         text = nazivLekcije,
         modifier = Modifier
             .clickable {
-                navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}")
+                navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}")
             }
             .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
             .fillMaxWidth()

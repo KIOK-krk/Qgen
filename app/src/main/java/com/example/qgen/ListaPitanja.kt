@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
-fun ListaPitanja(navigiranjeEkrana: NavHostController, naslov: String?) {
+fun ListaPitanja(navigiranjeEkrana: NavHostController, naslov: String?,idLekcija: String?) {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
