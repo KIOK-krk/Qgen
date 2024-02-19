@@ -41,4 +41,20 @@ object DataRepository {
         }
         awaitClose { slusajPromjene.remove() }
     }
+    fun dohvatiPitanja(): Flow<List<Pitanje>> = callbackFlow addSnapshotListener@{
+        val collectionReferenca = db.collection("Pitanja")
+        val slusajPromjene = collectionReferenca.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                close(e)
+                return@addSnapshotListener
+            }
+            val pitanja = snapshot?.documents?.mapNotNull { document ->
+                document.toObject(Pitanje::class.java)?.apply {
+                    idPitanja = document.id // Postavi idLekcije na Firestore dokument ID
+                }
+            }.orEmpty()
+            trySend(pitanja).isSuccess
+        }
+        awaitClose { slusajPromjene.remove() }
+    }
 }
