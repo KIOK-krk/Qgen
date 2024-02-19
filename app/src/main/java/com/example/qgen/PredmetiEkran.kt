@@ -94,9 +94,10 @@ fun karticaLekcija(
     Text(
         text = nazivLekcije,
         modifier = Modifier
-            .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
             .clickable {
-                navigiranjeEkrana.navigate("ListaPitanja")
+                navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}")
             }
+            .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
+            .fillMaxWidth()
     )
 }

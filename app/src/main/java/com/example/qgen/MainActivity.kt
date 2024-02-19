@@ -38,7 +38,7 @@ fun NavigiranjeEkrana() {
         composable("ListaPredmeta") { ListaPredmeta(navigiranjeEkrana) }
         composable("AIgeneriranje") { AIgeneriranje(navigiranjeEkrana) }
         composable("PredmetiEkran") { PredmetiEkran(navigiranjeEkrana) }
-        composable("ListaPitanja/naslov") { backStackEntry ->
+        composable("ListaPitanja/{naslov}") { backStackEntry ->
             ListaPitanja(navigiranjeEkrana, naslov = backStackEntry.arguments?.getString("naslov"))
         }
         composable("LoginEkran") { LoginEkran(navigiranjeEkrana) }

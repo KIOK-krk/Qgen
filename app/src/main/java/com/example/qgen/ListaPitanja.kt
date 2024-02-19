@@ -39,13 +39,13 @@ fun ListaPitanja(navigiranjeEkrana: NavHostController, naslov: String?) {
                 modifier = Modifier
                     .padding(top = 16.dp, bottom = 8.dp)
             )
-            //if (naslov != null) {
+            if (naslov != null) {
                 Text(
-                    "naslov",
+                    naslov,
                     modifier = Modifier
                         .padding(top = 16.dp, start = 8.dp)
                 )
-            //}
+            }
 
             Spacer(modifier = Modifier.weight(1f))
             Icon(
