@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -20,14 +22,22 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 
 @Composable
-fun ListaPitanja(navigiranjeEkrana: NavHostController, naslov: String?,idLekcija: String?) {
+fun ListaPitanja(
+    navigiranjeEkrana: NavHostController,
+    naslov: String?,
+    idLekcija: String?,
+    viewModel: ListaPitanjaViewModel = viewModel()
+) {
+    val pitanja = viewModel.svaPitanja.collectAsState().value.filter { it.idLekcije == idLekcija }
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -62,44 +72,53 @@ fun ListaPitanja(navigiranjeEkrana: NavHostController, naslov: String?,idLekcija
             )
         }
         LazyColumn(verticalArrangement = Arrangement.Center) {
-            items(31) {
-                Card(
-                    shape = RoundedCornerShape(
-                        7.dp
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .padding(vertical = 3.5.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Text("Pitanje $it",
-                            modifier = Modifier
-                                .padding(top = 9.dp, start = 25.dp)
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(imageVector = Icons.Default.Add, contentDescription = null,
-                            tint = Color(0xFF1c81b8),
-                            modifier = Modifier
-                                .padding(top = 10.dp, end = 15.dp)
-                                .clickable { navigiranjeEkrana.navigate("AIgeneriranje") }
-                        )
-                    }
-                }
+            items(pitanja) { pitanje ->
+                PitanjeKartica(navigiranjeEkrana = navigiranjeEkrana, pitanje)
             }
         }
     }
     Column (verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.End){
+        horizontalAlignment = Alignment.End
+    ) {
         ExtendedFloatingActionButton(
-            onClick = {navigiranjeEkrana.navigate("AIgeneriranje")  },
+            onClick = { navigiranjeEkrana.navigate("AIgeneriranje") },
             icon = { Icon(Icons.Filled.Add, null) },
             text = { Text(text = "Kreiraj nova AI pitanja") },
             modifier = Modifier
-                .padding(bottom = 16.dp,end = 16.dp)
+                .padding(bottom = 16.dp, end = 16.dp)
         )
+    }
+}
+
+@Composable
+fun PitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje) {
+    Card(
+        shape = RoundedCornerShape(7.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize()
+            .padding(vertical = 3.5.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                pitanje.tekstPitanja,
+                modifier = Modifier
+                    .padding(vertical = 9.dp, horizontal = 8.dp)
+                    .weight(1f)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = null,
+                tint = Color(0xFF1c81b8),
+                modifier = Modifier
+                    .clickable { navigiranjeEkrana.navigate("AIgeneriranje") }
+                    .padding(end = 10.dp)
+            )
+        }
     }
 }
 

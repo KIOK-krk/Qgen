@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
 fun NavigiranjeEkrana() {
     val navigiranjeEkrana = rememberNavController()
     NavHost(navController = navigiranjeEkrana, startDestination = "PredmetiEkran") {
-        composable("ListaPredmeta") { ListaPredmeta(navigiranjeEkrana) }
         composable("AIgeneriranje") { AIgeneriranje(navigiranjeEkrana) }
         composable("PredmetiEkran") { PredmetiEkran(navigiranjeEkrana) }
         composable("ListaPitanja/{naslov}/{idLekcije}") { backStackEntry ->
