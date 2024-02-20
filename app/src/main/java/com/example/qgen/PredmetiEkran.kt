@@ -48,7 +48,7 @@ fun PredmetiEkran(
     viewModel.dohvatiSveLekcije()
     val predmeti = viewModel.sviPredmet.collectAsState().value
     var razredprosiren by remember { mutableStateOf(false) }
-    var razred by remember { mutableStateOf("5") }
+    var razred = viewModel.trenutniRazred.collectAsState().value
     Column {
         Row {
             Text(

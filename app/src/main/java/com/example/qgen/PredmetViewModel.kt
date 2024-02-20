@@ -15,10 +15,11 @@ class PredmetiViewModel : ViewModel(){
     val sveLekcije: MutableStateFlow<List<Lekcija>> = lekcije
 
     private val razred = MutableStateFlow<String>("5")
+    val trenutniRazred: StateFlow<String> = razred
 
     init{
         viewModelScope.launch {
-            postaviRazred("5")
+            postaviRazred(razred.value)
         }
     }
 
