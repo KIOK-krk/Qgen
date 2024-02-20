@@ -1,6 +1,7 @@
 package com.example.qgen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
@@ -42,6 +44,7 @@ fun PredmetiEkran(
     navigiranjeEkrana: NavHostController,
     viewModel: PredmetiViewModel = viewModel()
 ) {
+
     viewModel.dohvatiSveLekcije()
     val predmeti = viewModel.sviPredmet.collectAsState().value
     var razredprosiren by remember { mutableStateOf(false) }
@@ -55,7 +58,9 @@ fun PredmetiEkran(
                     .padding(all = 25.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
-            Column {
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
                 Text(
                     text = "Razred:  ",
                     fontSize = 12.sp,
@@ -78,7 +83,7 @@ fun PredmetiEkran(
                             color = Color(0xff280a82),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.End
                         ),
                         onValueChange = {},
                         readOnly = true,
@@ -94,8 +99,7 @@ fun PredmetiEkran(
                         },
                         modifier = Modifier
                             .menuAnchor()
-                            .width(90.dp)
-                            .padding(end = 8.dp)
+                            .width(100.dp)
                             .height(60.dp)
                     )
                     ExposedDropdownMenu(
@@ -106,73 +110,147 @@ fun PredmetiEkran(
                     ) {
                         DropdownMenuItem(
                             text = {
-                                Text(text = "1")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "1",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "1"
+                                viewModel.postaviRazred("1")
                                 razredprosiren = false
-                            }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "2")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "2",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "2"
+                                viewModel.postaviRazred("2")
                                 razredprosiren = false
                             }
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "3")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "3",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "3"
+                                viewModel.postaviRazred("3")
                                 razredprosiren = false
                             }
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "4")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "4",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "4"
+                                viewModel.postaviRazred("4")
                                 razredprosiren = false
                             }
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "5")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "5",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "5"
+                                viewModel.postaviRazred("5")
                                 razredprosiren = false
                             }
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "6")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "6",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "6"
+                                viewModel.postaviRazred("6")
                                 razredprosiren = false
                             }
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "7")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "7",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "7"
+                                viewModel.postaviRazred("7")
                                 razredprosiren = false
                             }
                         )
                         DropdownMenuItem(
                             text = {
-                                Text(text = "8")
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(text = "8",
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             },
                             onClick = {
                                 razred = "8"
+                                viewModel.postaviRazred("8")
                                 razredprosiren = false
                             }
                         )
@@ -183,7 +261,7 @@ fun PredmetiEkran(
 
         LazyColumn() {
             items(predmeti) { predmet ->
-                PredmetKartica(predmet, navigiranjeEkrana, razred, viewModel,)
+                PredmetKartica(predmet, navigiranjeEkrana, razred, viewModel)
             }
         }
     }
@@ -194,7 +272,7 @@ fun PredmetiEkran(
 fun PredmetKartica(predmet: Predmet,navigiranjeEkrana:NavHostController, razred : String, viewModel: PredmetiViewModel) {
     // Pretpostavimo da viewModel već prati prosireno stanje za svaki predmet
     val lekcije = viewModel.sveLekcije.collectAsState().value
-        .filter { it.PredmetID == predmet.idPredmeta && it.Razred == razred }
+        .filter { it.PredmetID == predmet.idPredmeta && it.Razred.contains(razred) }
 
     Card(
         shape = RoundedCornerShape(8.dp),

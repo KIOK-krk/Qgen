@@ -13,16 +13,27 @@ class PredmetiViewModel : ViewModel(){
 
     private val lekcije = MutableStateFlow<List<Lekcija>>(emptyList())
     val sveLekcije: MutableStateFlow<List<Lekcija>> = lekcije
+
+    private val razred = MutableStateFlow<String>("5")
+
     init{
         viewModelScope.launch {
+            postaviRazred("5")
+        }
+    }
+
+    fun postaviRazred(noviRazred: String) {
+        razred.value = noviRazred
+        viewModelScope.launch {
             DataRepository.dohvatiPredmete().collect { predmetiList ->
-                predmeti.value = predmetiList
+                predmeti.value = predmetiList.filter { it.razred.contains(noviRazred) }
             }
             DataRepository.dohvatiLekcije().collect { lekcijeList ->
-                lekcije.value = lekcijeList
+                lekcije.value = lekcijeList.filter { it.Razred.contains(noviRazred) }
             }
         }
     }
+
     fun dohvatiSveLekcije(){
         viewModelScope.launch {
             DataRepository.dohvatiLekcije().collect { lekcijeList ->
