@@ -1,10 +1,13 @@
 package com.example.qgen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,16 +20,27 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 
@@ -73,7 +87,7 @@ fun ListaPitanja(
         }
         LazyColumn(verticalArrangement = Arrangement.Center) {
             items(pitanja) { pitanje ->
-                PitanjeKartica(navigiranjeEkrana = navigiranjeEkrana, pitanje)
+                NaslovPitanjeKartica(navigiranjeEkrana = navigiranjeEkrana, pitanje)
             }
         }
     }
@@ -91,7 +105,8 @@ fun ListaPitanja(
 }
 
 @Composable
-fun PitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje) {
+fun NaslovPitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje) {
+    var popupProsiren by remember { mutableStateOf(false) }
     Card(
         shape = RoundedCornerShape(7.dp),
         modifier = Modifier
@@ -115,12 +130,79 @@ fun PitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje) {
                 contentDescription = null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .clickable { navigiranjeEkrana.navigate("AIgeneriranje") }
+                    .clickable { popupProsiren = !popupProsiren }
                     .padding(end = 10.dp)
             )
         }
     }
+    if (popupProsiren == true){
+        pitanjeKartica()
+    }
 }
+@Composable
+fun pitanjeKartica(){
 
+    Box(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(
+                start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp
+            )
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                )
+            ) {
+                Text("Pitanje")
+                OutlinedTextField(
+                    value = "Koji je najbitniji dio kompjutera?",
+                    onValueChange = {},
+                    enabled = true,
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = 60.dp)
+                        .background(Color.White, RoundedCornerShape(40.dp))
+                        .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                )
+                Text("Odgovor 1")
+                PitanjeRow()
+                Text("Odgovor 2")
+                PitanjeRow()
+                Text("Odgovor 3")
+                PitanjeRow()
+                Text("Zanimljivost")
 
+                OutlinedTextField(
+                    value = "Koji je najbitniji dio kompjutera?",
+                    onValueChange = {},
+                    enabled = true,
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = 150.dp)
+                        .background(Color.White, RoundedCornerShape(40.dp))
+                        .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                )
 
+            }
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Snimi")
+            }
+        }
+    }
+}

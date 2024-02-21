@@ -1,5 +1,6 @@
 package com.example.qgen
 
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.awaitClose
@@ -25,6 +26,7 @@ object DataRepository {
         }
         awaitClose { slusajPromjene.remove() }
     }
+
     fun dohvatiLekcije(): Flow<List<Lekcija>> = callbackFlow addSnapshotListener@{
         val collectionReferenca = db.collection("Lekcije")
         val slusajPromjene = collectionReferenca.addSnapshotListener { snapshot, e ->
@@ -41,6 +43,7 @@ object DataRepository {
         }
         awaitClose { slusajPromjene.remove() }
     }
+
     fun dohvatiPitanja(): Flow<List<Pitanje>> = callbackFlow addSnapshotListener@{
         val collectionReferenca = db.collection("Pitanja")
         val slusajPromjene = collectionReferenca.addSnapshotListener { snapshot, e ->
@@ -56,5 +59,44 @@ object DataRepository {
             trySend(pitanja).isSuccess
         }
         awaitClose { slusajPromjene.remove() }
+    }
+
+    fun obrisiPitanje(idPitanja: String) = callbackFlow {
+        val documentReferenca = db.collection("Pitanja").document(idPitanja)
+        documentReferenca.delete()
+            .addOnSuccessListener {
+                // Uspješno brisanje pitanja.
+                trySend(Result.success(Unit)).isSuccess
+            }
+            .addOnFailureListener { e ->
+                // Došlo je do greške prilikom brisanja pitanja.
+                close(e)
+            }
+        awaitClose { }
+    }
+
+    fun dodajPitanje(pitanje: Pitanje) = callbackFlow {
+        val collectionReferenca = db.collection("Pitanja")
+        collectionReferenca.add(pitanje)
+            .addOnSuccessListener { documentReference ->
+                trySend(Result.success(documentReference.id)).isSuccess
+            }
+            .addOnFailureListener { e ->
+                close(e)
+            }
+        awaitClose { }
+    }
+
+    fun azurirajPitanje(idPitanja: String, novoPitanje: Pitanje) = callbackFlow {
+        val documentReferenca = db.collection("Pitanja").document(idPitanja)
+        val ažuriranoPitanje = novoPitanje.copy(idPitanja = "")
+        documentReferenca.set(ažuriranoPitanje, SetOptions.merge())
+            .addOnSuccessListener {
+                trySend(Result.success(Unit)).isSuccess
+            }
+            .addOnFailureListener { e ->
+                close(e)
+            }
+        awaitClose { }
     }
 }

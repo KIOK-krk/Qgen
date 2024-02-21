@@ -62,7 +62,7 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
             ) {
                 Text("Pitanje")
                 OutlinedTextField(
-                    value = "Koji je najbitniji dio kompjutera?Koji je najbitniji dio kompjutera?",
+                    value = "Koji je najbitniji dio kompjutera?",
                     onValueChange = {},
                     enabled = true,
                     textStyle = TextStyle(
