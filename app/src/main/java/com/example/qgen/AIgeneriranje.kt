@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -128,7 +128,10 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
 }
 @Composable
 fun PitanjeRow() {
-Row {
+Row(
+    modifier = Modifier
+        .fillMaxWidth()
+) {
     OutlinedTextField(
         value = "Matična ploča",
         onValueChange = {},
@@ -143,10 +146,11 @@ Row {
             .defaultMinSize(minHeight = 60.dp)
             .background(Color.White, RoundedCornerShape(40.dp))
             .padding(start = 28.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+            .width(250.dp)
        )
     RadioButton(
         modifier = Modifier
-            .padding(top = 4.dp),
+            .padding(start = 4.dp, top = 4.dp),
         selected = false,
         onClick = {}
     )

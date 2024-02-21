@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -141,7 +142,6 @@ fun NaslovPitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje)
 }
 @Composable
 fun pitanjeKartica(){
-
     Box(
         modifier = Modifier
             .wrapContentSize()
@@ -200,8 +200,18 @@ fun pitanjeKartica(){
                 )
 
             }
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Snimi")
+            Row {
+                Button(onClick = { /*TODO*/ },) {
+                    Text(
+                        text = "Snimi"
+                    )
+                }
+                Spacer(modifier = Modifier.padding(horizontal = 32.dp))
+                Button(onClick = { /*TODO*/ }) {
+                    Text(
+                        text = "Obriši"
+                    )
+                }
             }
         }
     }
