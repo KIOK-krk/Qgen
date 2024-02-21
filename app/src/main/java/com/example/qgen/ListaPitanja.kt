@@ -27,6 +27,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -175,11 +176,11 @@ fun pitanjeKartica(){
                         .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
                 )
                 Text("Odgovor 1")
-                PitanjeRow()
+                ListaPitanjaPitanjeRow()
                 Text("Odgovor 2")
-                PitanjeRow()
+                ListaPitanjaPitanjeRow()
                 Text("Odgovor 3")
-                PitanjeRow()
+                ListaPitanjaPitanjeRow()
                 Text("Zanimljivost")
 
                 OutlinedTextField(
@@ -214,5 +215,35 @@ fun pitanjeKartica(){
                 }
             }
         }
+    }
+}
+@Composable
+fun ListaPitanjaPitanjeRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            value = "Matična ploča",
+            onValueChange = {},
+            enabled = true,
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            modifier = Modifier
+                .defaultMinSize(minHeight = 60.dp)
+                .background(Color.White, RoundedCornerShape(40.dp))
+                .padding(start = 28.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                .width(250.dp)
+        )
+        RadioButton(
+            modifier = Modifier
+                .padding(start = 4.dp, top = 4.dp),
+            selected = false,
+            onClick = {}
+        )
     }
 }
