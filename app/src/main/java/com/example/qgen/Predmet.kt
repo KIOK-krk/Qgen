@@ -6,5 +6,3 @@ data class Predmet(
     val prosireno: Boolean = false,
     val razred: List<String> = emptyList<String>()
 )
-
-

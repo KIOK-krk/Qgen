@@ -12,11 +12,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -42,7 +46,8 @@ import androidx.navigation.NavHostController
 @Composable
 fun PredmetiEkran(
     navigiranjeEkrana: NavHostController,
-    viewModel: PredmetiViewModel = viewModel()
+    viewModel: PredmetiViewModel = viewModel(),
+    prosireno: Boolean
 ) {
 
     viewModel.dohvatiSveLekcije()
@@ -54,6 +59,7 @@ fun PredmetiEkran(
             Text(
                 text = "Predmeti",
                 fontSize = 25.sp,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
                     .padding(all = 25.dp)
             )
@@ -80,7 +86,6 @@ fun PredmetiEkran(
                         ),
                         value = razred,
                         textStyle = TextStyle(
-                            color = Color(0xff280a82),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.End
@@ -94,7 +99,8 @@ fun PredmetiEkran(
                             Text(
                                 text = razred,
                                 fontSize = 48.sp,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black
                             )
                         },
                         modifier = Modifier
@@ -261,7 +267,7 @@ fun PredmetiEkran(
 
         LazyColumn() {
             items(predmeti) { predmet ->
-                PredmetKartica(predmet, navigiranjeEkrana, razred, viewModel)
+                PredmetKartica(predmet, navigiranjeEkrana, razred, prosireno, viewModel)
             }
         }
     }
@@ -269,32 +275,52 @@ fun PredmetiEkran(
 
 
 @Composable
-fun PredmetKartica(predmet: Predmet,navigiranjeEkrana:NavHostController, razred : String, viewModel: PredmetiViewModel) {
+fun PredmetKartica(
+    predmet: Predmet,
+    navigiranjeEkrana: NavHostController,
+    razred: String,
+    prosireno: Boolean,
+    viewModel: PredmetiViewModel
+) {
     // Pretpostavimo da viewModel već prati prosireno stanje za svaki predmet
     val lekcije = viewModel.sveLekcije.collectAsState().value
         .filter { it.PredmetID == predmet.idPredmeta && it.Razred.contains(razred) }
-
-    Card(
-        shape = RoundedCornerShape(8.dp),
+    Row (
         modifier = Modifier
-            .padding(8.dp)
             .fillMaxWidth()
-    ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                viewModel.togglePredmetProsiren(predmet.idPredmeta)
-            }) {
-            Text(
-                text = predmet.nazivPredmeta,
-                modifier = Modifier.padding(16.dp)
-            )
-            if (predmet.prosireno) {
-                lekcije.forEach { lekcija ->
-                    karticaLekcija(nazivLekcije = lekcija.Naziv, navigiranjeEkrana = navigiranjeEkrana,idLekcije = lekcija.idLekcije)
+    ){
+        Card(
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+        ) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    viewModel.togglePredmetProsiren(predmet.idPredmeta)
+                }) {
+                Text(
+                    text = predmet.nazivPredmeta,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+                if (predmet.prosireno) {
+                    lekcije.forEach { lekcija ->
+                        karticaLekcija(
+                            nazivLekcije = lekcija.Naziv,
+                            navigiranjeEkrana = navigiranjeEkrana,
+                            idLekcije = lekcija.idLekcije
+                        )
+                    }
                 }
             }
         }
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowUp,
+            contentDescription = null
+        )
     }
 }
 
@@ -304,13 +330,22 @@ fun karticaLekcija(
     navigiranjeEkrana: NavHostController,
     idLekcije: String
 ) {
-    Text(
-        text = nazivLekcije,
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
         modifier = Modifier
-            .clickable {
-                navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}")
-            }
-            .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
-            .fillMaxWidth()
-    )
+            .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
+    ) {
+        Text(
+            text = nazivLekcije,
+            modifier = Modifier
+                .clickable {
+                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}")
+                }
+                .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
+                .fillMaxWidth()
+        )
+    }
 }
