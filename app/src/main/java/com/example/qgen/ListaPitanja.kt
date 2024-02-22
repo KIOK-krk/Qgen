@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,14 +66,15 @@ fun ListaPitanja(
                     Icons.Default.ArrowBack, "Povratak",
                     tint = Color(0xFF1c81b8),
                     modifier = Modifier
-                        .padding(top = 8.dp, bottom = 2.dp)
+                        .padding(top = 8.dp)
+                        .size(35.dp)
                 )
             }
             if (naslov != null) {
                 Text(
                     naslov,
                     modifier = Modifier
-                        .padding(top = 16.dp, start = 8.dp)
+                        .padding(top = 20.dp, start = 8.dp)
                 )
             }
 
@@ -82,18 +83,27 @@ fun ListaPitanja(
                 imageVector = Icons.Default.Build, contentDescription = null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 16.dp, bottom = 8.dp,end = 12.dp)
+                    .padding(top = 16.dp,end = 12.dp)
+                    .size(35.dp)
             )
             Icon(
                 imageVector = Icons.Default.Create, contentDescription = null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
                     .padding(top = 16.dp, bottom = 8.dp)
+                    .size(35.dp)
             )
         }
         LazyColumn(verticalArrangement = Arrangement.Center) {
             items(pitanja) { pitanje ->
-                NaslovPitanjeKartica(navigiranjeEkrana = navigiranjeEkrana, pitanje)
+                if (idLekcija != null) {
+                    NaslovPitanjeKartica(
+                        navigiranjeEkrana = navigiranjeEkrana,
+                        pitanje,
+                        idLekcija,
+                        viewModel
+                    )
+                }
             }
         }
     }
@@ -108,13 +118,13 @@ fun ListaPitanja(
                     Icons.Filled.Add, null,
                     tint = Color.White
                 )
-                   },
+            },
             text = {
                 Text(
                     text = "Kreiraj nova AI pitanja",
                     color = Color.White
                 )
-                   },
+            },
             modifier = Modifier
                 .padding(bottom = 16.dp, end = 16.dp)
         )
@@ -122,7 +132,12 @@ fun ListaPitanja(
 }
 
 @Composable
-fun NaslovPitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje) {
+fun NaslovPitanjeKartica(
+    navigiranjeEkrana: NavHostController,
+    pitanje: Pitanje,
+    idLekcija: String,
+    viewModel: ListaPitanjaViewModel
+) {
     var popupProsiren by remember { mutableStateOf(false) }
     Card(
         shape = RoundedCornerShape(7.dp),
@@ -130,6 +145,7 @@ fun NaslovPitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje)
             .fillMaxWidth()
             .wrapContentSize()
             .padding(vertical = 3.5.dp)
+            .clickable { popupProsiren = !popupProsiren }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -153,18 +169,24 @@ fun NaslovPitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje)
         }
     }
     if (popupProsiren == true) {
-        pitanjeKartica(pitanje)
+        pitanjeKartica(pitanje, idLekcija, viewModel)
     }
 }
 
 @Composable
-fun pitanjeKartica(pitanje: Pitanje) {
+fun pitanjeKartica(pitanje: Pitanje, idLekcija: String, viewModel: ListaPitanjaViewModel) {
+    // Definisanje stanja za tekstualna polja
+    var pitanjeText by remember { mutableStateOf(pitanje.tekstPitanja) }
+    var odgovor1Text by remember { mutableStateOf(pitanje.odgovori[0]) }
+    var odgovor2Text by remember { mutableStateOf(pitanje.odgovori[1]) }
+    var odgovor3Text by remember { mutableStateOf(pitanje.odgovori[2]) }
+    var zanimljivostText by remember { mutableStateOf(pitanje.zanimljivost) }
+    var odabranTocanOdgovor by remember { mutableStateOf(pitanje.tocanOdgovor - 1) } // 0 znači da nijedan nije selektovan
+
     Box(
         modifier = Modifier
             .wrapContentSize()
-            .padding(
-                start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp
-            )
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -174,66 +196,84 @@ fun pitanjeKartica(pitanje: Pitanje) {
                     containerColor = Color.White
                 )
             ) {
-                Text("Pitanje")
-                OutlinedTextField(
-                    value = pitanje.tekstPitanja,
-                    onValueChange = {},
-                    enabled = true,
-                    textStyle = TextStyle(
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultMinSize(minHeight = 60.dp)
-                        .background(Color.White, RoundedCornerShape(40.dp))
-                        .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
-                )
-                Text("Odgovor 1")
-                ListaPitanjaPitanjeRow(pitanje.odgovori[0])
-                Text("Odgovor 2")
-                ListaPitanjaPitanjeRow(pitanje.odgovori[1])
-                Text("Odgovor 3")
-                ListaPitanjaPitanjeRow(pitanje.odgovori[2])
-                Text("Zanimljivost")
-
-                OutlinedTextField(
-                    value = pitanje.zanimljivost,
-                    onValueChange = {},
-                    enabled = true,
-                    textStyle = TextStyle(
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultMinSize(minHeight = 150.dp)
-                        .background(Color.White, RoundedCornerShape(40.dp))
-                        .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
-                )
-
+                Column {
+                    Text("Pitanje")
+                    OutlinedTextField(
+                        value = pitanjeText,
+                        onValueChange = { pitanjeText = it },
+                        textStyle = TextStyle(
+                            color = Color.Black,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 60.dp)
+                            .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                    )
+                    Text("Odgovor 1")
+                    ListaPitanjaPitanjeRow(
+                        odgovor1Text,
+                        { odgovor1Text = it },
+                        odabranTocanOdgovor == 1,
+                        { odabranTocanOdgovor = 1 })
+                    Text("Odgovor 2")
+                    ListaPitanjaPitanjeRow(
+                        odgovor2Text,
+                        { odgovor2Text = it },
+                        odabranTocanOdgovor == 2,
+                        { odabranTocanOdgovor = 2 })
+                    Text("Odgovor 3")
+                    ListaPitanjaPitanjeRow(
+                        odgovor3Text,
+                        { odgovor3Text = it },
+                        odabranTocanOdgovor == 3,
+                        { odabranTocanOdgovor = 3 })
+                    Text("Zanimljivost")
+                    OutlinedTextField(
+                        value = zanimljivostText,
+                        onValueChange = { zanimljivostText = it },
+                        textStyle = TextStyle(
+                            color = Color.Black,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 150.dp)
+                            .background(Color.White, RoundedCornerShape(40.dp))
+                            .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                    )
+                }
             }
             Row {
                 Button(
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
+                    onClick = {
+                        val azuriranoPitanje = Pitanje(
+                            tekstPitanja = pitanjeText,
+                            odgovori = listOf(odgovor1Text, odgovor2Text, odgovor3Text),
+                            tocanOdgovor = odabranTocanOdgovor + 1,
+                            zanimljivost = zanimljivostText,
+                            //autor = "Ažurirani Autor", // Pretpostavka da autor ostaje isti ili dodajte logiku za ažuriranje
+                            idLekcije = idLekcija // Pretpostavka da ID lekcije ostaje isti ili dodajte logiku za ažuriranje
+                        )
+
+                        viewModel.azurirajPitanje(pitanje.idPitanja, azuriranoPitanje)
+                    },
+                    colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8))
                 ) {
-                    Text(
-                        text = "Snimi"
-                    )
+                    Text(text = "Snimi")
                 }
                 Spacer(modifier = Modifier.padding(horizontal = 32.dp))
                 Button(
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
+                    onClick = {
+                        viewModel.obrisiPitanje(pitanje.idPitanja)
+                    },
+                    colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8))
                 ) {
-                    Text(
-                        text = "Obriši"
-                    )
+                    Text(text = "Obriši")
                 }
             }
         }
@@ -241,15 +281,19 @@ fun pitanjeKartica(pitanje: Pitanje) {
 }
 
 @Composable
-fun ListaPitanjaPitanjeRow(odgovor: String) {
+fun ListaPitanjaPitanjeRow(
+    odgovorText: String,
+    onOdgovorChange: (String) -> Unit,
+    isSelected: Boolean,
+    onSelectChange: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         OutlinedTextField(
-            value = odgovor,
-            onValueChange = {},
-            enabled = true,
+            value = odgovorText,
+            onValueChange = onOdgovorChange,
             textStyle = TextStyle(
                 color = Color.Black,
                 fontSize = 16.sp,
@@ -259,14 +303,13 @@ fun ListaPitanjaPitanjeRow(odgovor: String) {
             modifier = Modifier
                 .defaultMinSize(minHeight = 60.dp)
                 .background(Color.White, RoundedCornerShape(40.dp))
-                .padding(start = 28.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
-                .width(250.dp)
+                .weight(1f)
+                .padding(start = 28.dp, top = 4.dp, bottom = 4.dp, end = 8.dp)
         )
         RadioButton(
-            modifier = Modifier
-                .padding(start = 4.dp, top = 4.dp),
-            selected = false,
-            onClick = {}
+            selected = isSelected,
+            onClick = onSelectChange,
+            modifier = Modifier.padding(start = 4.dp, top = 4.dp)
         )
     }
 }
