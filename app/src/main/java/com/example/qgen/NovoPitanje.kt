@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,18 +39,27 @@ import androidx.navigation.NavHostController
 import com.alexstyl.swipeablecard.ExperimentalSwipeableCardApi
 @Composable
 fun NovoPitanjeGornjiBar(navigiranjeEkrana: NavHostController){
-    Column (
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+    Row (
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.Top
     ){
         IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
             Icon(
-                Icons.Default.ArrowBack, "Povratak" ,
+                Icons.Default.ArrowBack, "Povratak",
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 8.dp, bottom = 2.dp)
+                    .padding(top = 12.dp)
+                    .size(55.dp)
             )
         }
+        Text(
+            text = "Novo Pitanje",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(top = 16.dp, start = 8.dp)
+
+        )
     }
 }
 @Composable

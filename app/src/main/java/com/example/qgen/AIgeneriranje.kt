@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,18 +41,27 @@ import com.alexstyl.swipeablecard.swipableCard
 
 @Composable
 fun GornjiBar(navigiranjeEkrana: NavHostController) {
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ) {
+    Row (
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.Top
+    ){
         IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
             Icon(
                 Icons.Default.ArrowBack, "Povratak",
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 8.dp, bottom = 2.dp)
+                    .padding(top = 12.dp)
+                    .size(55.dp)
             )
         }
+        Text(
+            text = "Nova AI Pitanja",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(top = 16.dp, start = 8.dp)
+
+        )
     }
 }
 
@@ -77,9 +87,8 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                 })
         ) {
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White
-                ),
+                modifier = Modifier
+                    //.elevation(4.dp)
             ) {
                 Text("Pitanje")
                 OutlinedTextField(
@@ -95,16 +104,32 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .defaultMinSize(minHeight = 60.dp)
-                        .background(Color.White, RoundedCornerShape(40.dp))
-                        .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                        .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)
+                        .background(Color.White)
                 )
-                Text("Odgovor 1")
+                Text(
+                    "Odgovor 1",
+                    modifier = Modifier
+                        .padding(start = 2.dp)
+                )
                 PitanjeRow()
-                Text("Odgovor 2")
+                Text(
+                    "Odgovor 2",
+                    modifier = Modifier
+                        .padding(start = 2.dp)
+                )
                 PitanjeRow()
-                Text("Odgovor 3")
+                Text(
+                    "Odgovor 3",
+                    modifier = Modifier
+                        .padding(start = 2.dp)
+                )
                 PitanjeRow()
-                Text("Zanimljivost")
+                Text(
+                    "Zanimljivost",
+                    modifier = Modifier
+                        .padding(start = 2.dp)
+                )
 
                 OutlinedTextField(
                     value = "Koji je najbitniji dio kompjutera?Koji je najbitniji dio kompjutera?",
@@ -119,8 +144,8 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .defaultMinSize(minHeight = 150.dp)
-                        .background(Color.White, RoundedCornerShape(40.dp))
-                        .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                        .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 8.dp)
+                        .background(Color.White)
                 )
 
             }
@@ -166,9 +191,9 @@ Row(
         ),
         modifier = Modifier
             .defaultMinSize(minHeight = 60.dp)
-            .background(Color.White, RoundedCornerShape(40.dp))
             .padding(start = 28.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
             .width(250.dp)
+            .background(Color.White)
        )
     RadioButton(
         modifier = Modifier
