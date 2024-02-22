@@ -319,6 +319,7 @@ fun PredmetKartica(
         }
         Icon(
             imageVector = Icons.Default.KeyboardArrowUp,
+            tint = Color(0xFF1c81b8),
             contentDescription = null
         )
     }

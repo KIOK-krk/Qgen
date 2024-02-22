@@ -35,18 +35,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.alexstyl.swipeablecard.ExperimentalSwipeableCardApi
-import com.alexstyl.swipeablecard.rememberSwipeableCardState
-import com.alexstyl.swipeablecard.swipableCard
-
 @Composable
-fun GornjiBar(navigiranjeEkrana: NavHostController) {
-    Column(
+fun NovoPitanjeGornjiBar(navigiranjeEkrana: NavHostController){
+    Column (
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
-    ) {
+    ){
         IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
             Icon(
-                Icons.Default.ArrowBack, "Povratak",
+                Icons.Default.ArrowBack, "Povratak" ,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
                     .padding(top = 8.dp, bottom = 2.dp)
@@ -54,36 +51,28 @@ fun GornjiBar(navigiranjeEkrana: NavHostController) {
         }
     }
 }
-
-@OptIn(ExperimentalSwipeableCardApi::class)
 @Composable
-fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
-    GornjiBar(navigiranjeEkrana)
+fun NovoPitanje(navigiranjeEkrana: NavHostController) {
+    NovoPitanjeGornjiBar(navigiranjeEkrana)
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val state = rememberSwipeableCardState()
         Box(
             modifier = Modifier
                 .wrapContentSize()
                 .padding(
                     start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp
                 )
-                .swipableCard(state = state, onSwiped = { direction ->
-                    println("The card was swiped to $direction")
-                }, onSwipeCancel = {
-                    println("The swiping was cancelled")
-                })
         ) {
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White
-                ),
+                )
             ) {
                 Text("Pitanje")
                 OutlinedTextField(
-                    value = "Koji je najbitniji dio kompjutera?",
+                    value = "",
                     onValueChange = {},
                     enabled = true,
                     textStyle = TextStyle(
@@ -99,15 +88,15 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                         .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
                 )
                 Text("Odgovor 1")
-                PitanjeRow()
+                NovoPitanjePitanjeRow()
                 Text("Odgovor 2")
-                PitanjeRow()
+                NovoPitanjePitanjeRow()
                 Text("Odgovor 3")
-                PitanjeRow()
+                NovoPitanjePitanjeRow()
                 Text("Zanimljivost")
 
                 OutlinedTextField(
-                    value = "Koji je najbitniji dio kompjutera?Koji je najbitniji dio kompjutera?",
+                    value = "",
                     onValueChange = {},
                     enabled = true,
                     textStyle = TextStyle(
@@ -127,16 +116,19 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
 
         }
         Row{
-            Button(onClick = { /*TODO*/ },
+            Button(
+                onClick = {},
                 colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
                 modifier = Modifier
                     .padding(end = 32.dp)) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = null,
-                )
+
+                    )
             }
-            Button(onClick = { /*TODO*/ },
+            Button(
+                onClick = {},
                 colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
                 modifier = Modifier
                     .padding(start = 32.dp)) {
@@ -149,32 +141,32 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
     }
 }
 @Composable
-fun PitanjeRow() {
-Row(
-    modifier = Modifier
-        .fillMaxWidth()
-) {
-    OutlinedTextField(
-        value = "Matična ploča",
-        onValueChange = {},
-        enabled = true,
-        textStyle = TextStyle(
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start
-        ),
+fun NovoPitanjePitanjeRow() {
+    Row(
         modifier = Modifier
-            .defaultMinSize(minHeight = 60.dp)
-            .background(Color.White, RoundedCornerShape(40.dp))
-            .padding(start = 28.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
-            .width(250.dp)
-       )
-    RadioButton(
-        modifier = Modifier
-            .padding(start = 4.dp, top = 4.dp),
-        selected = false,
-        onClick = {}
-    )
-}
+            .fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            value = "",
+            onValueChange = {},
+            enabled = true,
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            modifier = Modifier
+                .defaultMinSize(minHeight = 60.dp)
+                .background(Color.White, RoundedCornerShape(40.dp))
+                .padding(start = 28.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+                .width(250.dp)
+        )
+        RadioButton(
+            modifier = Modifier
+                .padding(start = 4.dp, top = 4.dp),
+            selected = false,
+            onClick = {}
+        )
+    }
 }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,10 +21,12 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -37,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -58,13 +60,15 @@ fun ListaPitanja(
         modifier = Modifier
             .padding(horizontal = 16.dp)
     ) {
-        Row {
-            Icon(
-                imageVector = Icons.Default.ArrowBack, contentDescription = null,
-                tint = Color(0xFF1c81b8),
-                modifier = Modifier
-                    .padding(top = 16.dp, bottom = 8.dp)
-            )
+        Row() {
+            IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
+                Icon(
+                    Icons.Default.ArrowBack, "Povratak",
+                    tint = Color(0xFF1c81b8),
+                    modifier = Modifier
+                        .padding(top = 8.dp, bottom = 2.dp)
+                )
+            }
             if (naslov != null) {
                 Text(
                     naslov,
@@ -97,9 +101,20 @@ fun ListaPitanja(
         horizontalAlignment = Alignment.End
     ) {
         ExtendedFloatingActionButton(
+            containerColor = Color(0xFF1c81b8) ,
             onClick = { navigiranjeEkrana.navigate("AIgeneriranje") },
-            icon = { Icon(Icons.Filled.Add, null) },
-            text = { Text(text = "Kreiraj nova AI pitanja") },
+            icon = {
+                Icon(
+                    Icons.Filled.Add, null,
+                    tint = Color.White
+                )
+                   },
+            text = {
+                Text(
+                    text = "Kreiraj nova AI pitanja",
+                    color = Color.White
+                )
+                   },
             modifier = Modifier
                 .padding(bottom = 16.dp, end = 16.dp)
         )
@@ -137,12 +152,13 @@ fun NaslovPitanjeKartica(navigiranjeEkrana: NavHostController, pitanje: Pitanje)
             )
         }
     }
-    if (popupProsiren == true){
-        pitanjeKartica()
+    if (popupProsiren == true) {
+        pitanjeKartica(pitanje)
     }
 }
+
 @Composable
-fun pitanjeKartica(){
+fun pitanjeKartica(pitanje: Pitanje) {
     Box(
         modifier = Modifier
             .wrapContentSize()
@@ -160,7 +176,7 @@ fun pitanjeKartica(){
             ) {
                 Text("Pitanje")
                 OutlinedTextField(
-                    value = "Koji je najbitniji dio kompjutera?",
+                    value = pitanje.tekstPitanja,
                     onValueChange = {},
                     enabled = true,
                     textStyle = TextStyle(
@@ -176,15 +192,15 @@ fun pitanjeKartica(){
                         .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
                 )
                 Text("Odgovor 1")
-                ListaPitanjaPitanjeRow()
+                ListaPitanjaPitanjeRow(pitanje.odgovori[0])
                 Text("Odgovor 2")
-                ListaPitanjaPitanjeRow()
+                ListaPitanjaPitanjeRow(pitanje.odgovori[1])
                 Text("Odgovor 3")
-                ListaPitanjaPitanjeRow()
+                ListaPitanjaPitanjeRow(pitanje.odgovori[2])
                 Text("Zanimljivost")
 
                 OutlinedTextField(
-                    value = "Koji je najbitniji dio kompjutera?",
+                    value = pitanje.zanimljivost,
                     onValueChange = {},
                     enabled = true,
                     textStyle = TextStyle(
@@ -202,13 +218,19 @@ fun pitanjeKartica(){
 
             }
             Row {
-                Button(onClick = { /*TODO*/ },) {
+                Button(
+                    onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
+                ) {
                     Text(
                         text = "Snimi"
                     )
                 }
                 Spacer(modifier = Modifier.padding(horizontal = 32.dp))
-                Button(onClick = { /*TODO*/ }) {
+                Button(
+                    onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
+                ) {
                     Text(
                         text = "Obriši"
                     )
@@ -217,14 +239,15 @@ fun pitanjeKartica(){
         }
     }
 }
+
 @Composable
-fun ListaPitanjaPitanjeRow() {
+fun ListaPitanjaPitanjeRow(odgovor: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         OutlinedTextField(
-            value = "Matična ploča",
+            value = odgovor,
             onValueChange = {},
             enabled = true,
             textStyle = TextStyle(
