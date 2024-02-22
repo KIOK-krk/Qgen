@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -43,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -56,25 +58,33 @@ fun ListaPitanja(
     viewModel: ListaPitanjaViewModel = viewModel()
 ) {
     val pitanja = viewModel.svaPitanja.collectAsState().value.filter { it.idLekcije == idLekcija }
+    Column (
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
+    ){
+        IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
+            Icon(
+                Icons.Default.ArrowBack, "Povratak",
+                tint = Color(0xFF1c81b8),
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .size(55.dp)
+            )
+        }
+    }
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
     ) {
         Row() {
-            IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
-                Icon(
-                    Icons.Default.ArrowBack, "Povratak",
-                    tint = Color(0xFF1c81b8),
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .size(35.dp)
-                )
-            }
             if (naslov != null) {
                 Text(
                     naslov,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(top = 20.dp, start = 8.dp)
+                        .padding(top = 16.dp, start = 8.dp)
+                        .offset(x = 40.dp)
                 )
             }
 
@@ -83,7 +93,7 @@ fun ListaPitanja(
                 imageVector = Icons.Default.Build, contentDescription = null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 16.dp,end = 12.dp)
+                    .padding(top = 16.dp, end = 12.dp)
                     .size(35.dp)
             )
             Icon(
@@ -92,6 +102,9 @@ fun ListaPitanja(
                 modifier = Modifier
                     .padding(top = 16.dp, bottom = 8.dp)
                     .size(35.dp)
+                    .clickable {
+                        navigiranjeEkrana.navigate("NovoPitanje")
+                    }
             )
         }
         LazyColumn(verticalArrangement = Arrangement.Center) {
@@ -155,7 +168,9 @@ fun NaslovPitanjeKartica(
                 pitanje.tekstPitanja,
                 modifier = Modifier
                     .padding(vertical = 9.dp, horizontal = 8.dp)
-                    .weight(1f)
+                    .weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.width(16.dp))
             Icon(
@@ -175,7 +190,6 @@ fun NaslovPitanjeKartica(
 
 @Composable
 fun pitanjeKartica(pitanje: Pitanje, idLekcija: String, viewModel: ListaPitanjaViewModel) {
-    // Definisanje stanja za tekstualna polja
     var pitanjeText by remember { mutableStateOf(pitanje.tekstPitanja) }
     var odgovor1Text by remember { mutableStateOf(pitanje.odgovori[0]) }
     var odgovor2Text by remember { mutableStateOf(pitanje.odgovori[1]) }
