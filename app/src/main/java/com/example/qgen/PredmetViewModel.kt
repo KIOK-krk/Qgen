@@ -1,5 +1,6 @@
 package com.example.qgen
 
+import Lekcija
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

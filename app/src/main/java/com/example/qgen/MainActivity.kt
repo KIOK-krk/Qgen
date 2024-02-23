@@ -41,7 +41,9 @@ fun NavigiranjeEkrana() {
             ListaPitanja(navigiranjeEkrana, naslov = backStackEntry.arguments?.getString("naslov"), idLekcija = backStackEntry.arguments?.getString("idLekcije"))
         }
         composable("LoginEkran") { LoginEkran(navigiranjeEkrana) }
-        composable("NovoPitanje") { NovoPitanje(navigiranjeEkrana) }
+        composable("NovoPitanje/{idLekcije}") {backStackEntry ->
+            NovoPitanje(navigiranjeEkrana, idLekcija = backStackEntry.arguments?.getString("idLekcije"))
+        }
     }
 }
 

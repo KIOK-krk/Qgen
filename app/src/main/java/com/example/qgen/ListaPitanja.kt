@@ -103,7 +103,7 @@ fun ListaPitanja(
                     .padding(top = 16.dp, bottom = 8.dp)
                     .size(35.dp)
                     .clickable {
-                        navigiranjeEkrana.navigate("NovoPitanje")
+                        navigiranjeEkrana.navigate("NovoPitanje/${idLekcija}")
                     }
             )
         }

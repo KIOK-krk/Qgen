@@ -41,4 +41,16 @@ class ListaPitanjaViewModel : ViewModel(){
             }
         }
     }
+
+    fun dodajNovoPitanje(novoPitanje: Pitanje) {
+        viewModelScope.launch {
+            DataRepository.dodajPitanje(novoPitanje).collect { rezultat ->
+                if (rezultat.isSuccess) {
+                    println("Pitanje dodano s ID: ${rezultat.getOrNull()}")
+                } else {
+                    rezultat.exceptionOrNull()?.message?.let { println(it) }
+                }
+            }
+        }
+    }
 }
