@@ -100,7 +100,7 @@ object DataRepository {
             }
         awaitClose { }
     }
-    fun dohvatiKorisnike(): Flow<List<Pitanje>> = callbackFlow addSnapshotListener@{
+    fun dohvatiKorisnike(): Flow<List<Korisnik>> = callbackFlow addSnapshotListener@{
         val collectionReferenca = db.collection("Korisnici")
         val slusajPromjene = collectionReferenca.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -108,8 +108,8 @@ object DataRepository {
                 return@addSnapshotListener
             }
             val korisnici = snapshot?.documents?.mapNotNull { document ->
-                document.toObject(Pitanje::class.java)?.apply {
-                    idPitanja = document.id
+                document.toObject(Korisnik::class.java)?.apply {
+                    oznaka = document.id
                 }
             }.orEmpty()
             trySend(korisnici).isSuccess
