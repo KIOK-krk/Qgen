@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class ListaPitanjaViewModel : ViewModel(){
+class ListaPitanjaViewModel : ViewModel() {
     private val pitanja = MutableStateFlow<List<Pitanje>>(emptyList())
     val svaPitanja: StateFlow<List<Pitanje>> = pitanja
 

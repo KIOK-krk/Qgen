@@ -100,4 +100,21 @@ object DataRepository {
             }
         awaitClose { }
     }
+    fun dohvatiKorisnike(): Flow<List<Pitanje>> = callbackFlow addSnapshotListener@{
+        val collectionReferenca = db.collection("Korisnici")
+        val slusajPromjene = collectionReferenca.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                close(e)
+                return@addSnapshotListener
+            }
+            val korisnici = snapshot?.documents?.mapNotNull { document ->
+                document.toObject(Pitanje::class.java)?.apply {
+                    idPitanja = document.id
+                }
+            }.orEmpty()
+            trySend(korisnici).isSuccess
+        }
+        awaitClose { slusajPromjene.remove() }
+    }
+
 }
