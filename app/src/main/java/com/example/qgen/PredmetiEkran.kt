@@ -343,7 +343,8 @@ fun karticaLekcija(
             text = nazivLekcije,
             modifier = Modifier
                 .clickable {
-                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}")
+                    val oznaka = "KOD-KOD"
+                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}/${oznaka}")
                 }
                 .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
                 .fillMaxWidth()

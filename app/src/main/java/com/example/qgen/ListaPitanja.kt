@@ -55,6 +55,7 @@ fun ListaPitanja(
     navigiranjeEkrana: NavHostController,
     naslov: String?,
     idLekcija: String?,
+    oznaka : String?,
     viewModel: ListaPitanjaViewModel = viewModel()
 ) {
     val pitanja = viewModel.svaPitanja.collectAsState().value.filter { it.idLekcije == idLekcija }
@@ -64,7 +65,7 @@ fun ListaPitanja(
     ){
         IconButton(onClick = { navigiranjeEkrana.navigateUp() }) {
             Icon(
-                Icons.Default.ArrowBack, "Povratak",
+                Icons.Default.ArrowBack, null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -77,18 +78,28 @@ fun ListaPitanja(
             .padding(horizontal = 16.dp)
     ) {
         Row() {
-            if (naslov != null) {
-                Text(
-                    naslov,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(top = 16.dp, start = 8.dp)
-                        .offset(x = 40.dp)
-                )
+            Column {
+                if (naslov != null) {
+                    Text(
+                        naslov,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(top = 4.dp, start = 8.dp,end = 128.dp)
+                            .offset(x = 40.dp)
+                    )
+                }
+                if (oznaka != null) {
+                    Text(
+                        oznaka,
+                        modifier = Modifier
+                            .padding(top = 4.dp, start = 8.dp)
+                            .offset(x = 40.dp))
+                }
             }
-
-            Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = Icons.Default.Build, contentDescription = null,
                 tint = Color(0xFF1c81b8),

@@ -124,7 +124,9 @@ fun LoginEkran(
                 .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 8.dp)
         )
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navigiranjeEkrana.navigate("PredmetiEkran")
+            },
             modifier = Modifier.padding(bottom = 28.dp)
         ) {
             Text("Prijavi se")
