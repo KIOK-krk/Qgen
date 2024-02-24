@@ -37,11 +37,11 @@ fun NavigiranjeEkrana() {
     NavHost(navController = navigiranjeEkrana, startDestination = "LoginEkran") {
         composable("AIgeneriranje") { AIgeneriranje(navigiranjeEkrana) }
         composable("PredmetiEkran") { PredmetiEkran(navigiranjeEkrana, prosireno = false) }
-        composable("ListaPitanja/{naslov}/{idLekcije}/{oznaka}") { backStackEntry ->
+        composable("ListaPitanja/{naslov}/{idLekcije}/{oznakaLekcije}") { backStackEntry ->
             ListaPitanja(navigiranjeEkrana,
                 naslov = backStackEntry.arguments?.getString("naslov"),
                 idLekcija = backStackEntry.arguments?.getString("idLekcije"),
-                oznaka = backStackEntry.arguments?.getString("oznaka")
+                oznakaLekcije = backStackEntry.arguments?.getString("oznakaLekcije")
             )
         }
         composable("LoginEkran") { LoginEkran(navigiranjeEkrana) }

@@ -1,5 +1,6 @@
 package com.example.qgen
 
+import Lekcija
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -311,7 +312,8 @@ fun PredmetKartica(
                         karticaLekcija(
                             nazivLekcije = lekcija.Naziv,
                             navigiranjeEkrana = navigiranjeEkrana,
-                            idLekcije = lekcija.idLekcije
+                            idLekcije = lekcija.idLekcije,
+                            oznakaLekcije = lekcija.oznakaLekcije
                         )
                     }
                 }
@@ -329,7 +331,8 @@ fun PredmetKartica(
 fun karticaLekcija(
     nazivLekcije: String,
     navigiranjeEkrana: NavHostController,
-    idLekcije: String
+    idLekcije: String,
+    oznakaLekcije: String
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -343,8 +346,7 @@ fun karticaLekcija(
             text = nazivLekcije,
             modifier = Modifier
                 .clickable {
-                    val oznaka = "KOD-KOD"
-                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}/${oznaka}")
+                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}/${oznakaLekcije}")
                 }
                 .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
                 .fillMaxWidth()

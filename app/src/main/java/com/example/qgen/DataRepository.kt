@@ -109,7 +109,7 @@ object DataRepository {
             }
             val korisnici = snapshot?.documents?.mapNotNull { document ->
                 document.toObject(Korisnik::class.java)?.apply {
-                    oznaka = document.id
+                    idKorisnika = document.id
                 }
             }.orEmpty()
             trySend(korisnici).isSuccess

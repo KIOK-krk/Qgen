@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -55,7 +56,7 @@ fun ListaPitanja(
     navigiranjeEkrana: NavHostController,
     naslov: String?,
     idLekcija: String?,
-    oznaka : String?,
+    oznakaLekcije : String?,
     viewModel: ListaPitanjaViewModel = viewModel()
 ) {
     val pitanja = viewModel.svaPitanja.collectAsState().value.filter { it.idLekcije == idLekcija }
@@ -68,7 +69,7 @@ fun ListaPitanja(
                 Icons.Default.ArrowBack, null,
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 12.dp)
+                    .padding(top = 16.dp)
                     .size(55.dp)
             )
         }
@@ -77,46 +78,50 @@ fun ListaPitanja(
         modifier = Modifier
             .padding(horizontal = 16.dp)
     ) {
-        Row() {
-            Column {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
+            ) {
                 if (naslov != null) {
                     Text(
-                        naslov,
+                        text = naslov,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .wrapContentSize()
-                            .padding(top = 4.dp, start = 8.dp,end = 128.dp)
-                            .offset(x = 40.dp)
+                            .padding(start = 32.dp, top = 16.dp,bottom = 4.dp)
                     )
                 }
-                if (oznaka != null) {
+                if (oznakaLekcije != null) {
                     Text(
-                        oznaka,
+                        text = oznakaLekcije + "-" + LogiraniKorisnik.oznakaLogiranogKorsinika,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .padding(top = 4.dp, start = 8.dp)
-                            .offset(x = 40.dp))
+                            .padding(start = 32.dp, bottom = 8.dp)
+                    )
                 }
             }
+
             Icon(
-                imageVector = Icons.Default.Build, contentDescription = null,
+                imageVector = Icons.Default.Create, contentDescription = "Create",
                 tint = Color(0xFF1c81b8),
                 modifier = Modifier
-                    .padding(top = 16.dp, end = 12.dp)
-                    .size(35.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Create, contentDescription = null,
-                tint = Color(0xFF1c81b8),
-                modifier = Modifier
-                    .padding(top = 16.dp, bottom = 8.dp)
+                    .background(Color.White, shape = CircleShape)
                     .size(35.dp)
                     .clickable {
                         navigiranjeEkrana.navigate("NovoPitanje/${idLekcija}")
                     }
             )
+
         }
         LazyColumn(verticalArrangement = Arrangement.Center) {
             items(pitanja) { pitanje ->

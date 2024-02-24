@@ -1,7 +1,9 @@
 package com.example.qgen
 
-class Korisnik {
-    val email: String = ""
-    val lozinka: String = ""
-    var oznaka: String = ""
-}
+data class Korisnik (
+    var email: String = "",
+    var lozinka: String = "",
+    var idKorisnika : String = "",
+    val imePrezime: String = "",
+    var oznakaKorisnika: String = ""
+)

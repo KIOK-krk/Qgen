@@ -4,5 +4,5 @@ data class Lekcija(
     var PredmetID: String = "",
     var AIupute: String = "",
     var Razred: String = "",
-    var Oznaka: String = ""
+    var oznakaLekcije: String = ""
 )

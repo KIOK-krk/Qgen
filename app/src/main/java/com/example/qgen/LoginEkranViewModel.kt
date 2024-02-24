@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel(email : String) : ViewModel(){
+class LoginViewModel() : ViewModel(){
 
     private val korisnici = MutableStateFlow<List<Korisnik>>(emptyList())
     val sviKorisnici: StateFlow<List<Korisnik>> = korisnici
@@ -18,5 +18,23 @@ class LoginViewModel(email : String) : ViewModel(){
             }
         }
     }
+
+    fun provjeriLogin(email: String, lozinka:String):Boolean{
+        for(korisnik in korisnici.value){
+            if(korisnik.email == email && korisnik.lozinka == lozinka) {
+                LogiraniKorisnik.oznakaLogiranogKorsinika = korisnik.oznakaKorisnika
+                return true
+            }
+        }
+        return false
+    }
 }
 
+
+object LogiraniKorisnik {
+    var oznakaLogiranogKorsinika = ""
+        get() = field
+        set(value) {
+            field = value
+        }
+}

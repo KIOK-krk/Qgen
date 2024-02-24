@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -32,14 +34,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 
 
 @Composable
 fun LoginEkran(
-    navigiranjeEkrana: NavHostController) {
-    var email by remember { mutableStateOf("") }
-    var lozinka by remember { mutableStateOf("") }
+    navigiranjeEkrana: NavHostController,
+    viewModel : LoginViewModel = viewModel()
+) {
+    var upisaniEmail by remember { mutableStateOf("") }
+    var upisanaLozinka by remember { mutableStateOf("") }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
@@ -96,8 +101,8 @@ fun LoginEkran(
         verticalArrangement = Arrangement.Bottom
     ) {
         OutlinedTextField(
-            value = email,
-            onValueChange = {email = it},
+            value = upisaniEmail,
+            onValueChange = {upisaniEmail = it},
             textStyle = TextStyle(
                 color = Color.Black,
                 fontSize = 16.sp,
@@ -109,9 +114,10 @@ fun LoginEkran(
                 .background(Color.White, RoundedCornerShape(40.dp))
                 .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
         )
+
         OutlinedTextField(
-            value = lozinka,
-            onValueChange = {lozinka = it},
+            value = upisanaLozinka,
+            onValueChange = {upisanaLozinka = it},
             textStyle = TextStyle(
                 color = Color.Black,
                 fontSize = 16.sp,
@@ -123,13 +129,22 @@ fun LoginEkran(
                 .background(Color.White, RoundedCornerShape(40.dp))
                 .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 8.dp)
         )
-        Button(
+        OutlinedButton(
+            colors = ButtonDefaults.buttonColors(Color.White),
             onClick = {
+                if(viewModel.provjeriLogin(upisaniEmail,upisanaLozinka) == true)
                 navigiranjeEkrana.navigate("PredmetiEkran")
             },
-            modifier = Modifier.padding(bottom = 28.dp)
+            modifier = Modifier
+                .padding(bottom = 80.dp, top = 24.dp)
+                .height(60.dp)
+                .width(250.dp)
         ) {
-            Text("Prijavi se")
+            Text(
+                color = Color.Black,
+                text = "Prijavi se",
+                fontSize = 26.sp
+            )
         }
     }
 }

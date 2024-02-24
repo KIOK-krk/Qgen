@@ -87,8 +87,9 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                 })
         ) {
             Card(
-                modifier = Modifier
-                    //.elevation(4.dp)
+                colors = CardDefaults.cardColors(
+                    containerColor =Color(0xFF1c81b8)
+                )
             ) {
                 Text("Pitanje")
                 OutlinedTextField(
