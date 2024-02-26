@@ -21,6 +21,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,57 +47,59 @@ fun LoginEkran(
 ) {
     var upisaniEmail by remember { mutableStateOf("") }
     var upisanaLozinka by remember { mutableStateOf("") }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(400.dp)
-            ) {
-                Column {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.upitnici),
-                            contentDescription = null,
-                            alignment = Alignment.TopCenter,
-                            modifier = Modifier
-                                .size(270.dp)
-                                .padding(top = 32.dp)
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.crta),
-                            contentDescription = null,
-                            alignment = Alignment.TopCenter,
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.logoaplikacije),
-                            contentDescription = null,
-                            alignment = Alignment.TopCenter,
-                            modifier = Modifier
-                                .size(320.dp)
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.crta),
-                            contentDescription = null,
-                            alignment = Alignment.TopCenter,
-                        )
-                    }
+    var greska = viewModel.greska.collectAsState()
 
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        Box(
+            modifier = Modifier
+                .size(400.dp)
+        ) {
+            Column {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.upitnici),
+                        contentDescription = null,
+                        alignment = Alignment.TopCenter,
+                        modifier = Modifier
+                            .size(270.dp)
+                            .padding(top = 32.dp)
+                    )
                 }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.crta),
+                        contentDescription = null,
+                        alignment = Alignment.TopCenter,
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.logoaplikacije),
+                        contentDescription = null,
+                        alignment = Alignment.TopCenter,
+                        modifier = Modifier
+                            .size(320.dp)
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.crta),
+                        contentDescription = null,
+                        alignment = Alignment.TopCenter,
+                    )
+                }
+
             }
         }
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
@@ -125,15 +129,23 @@ fun LoginEkran(
                 textAlign = TextAlign.Start
             ),
             label = { Text("Lozinka") },
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .background(Color.White, RoundedCornerShape(40.dp))
                 .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 8.dp)
         )
+        if(greska.value == true) {
+            Text(
+                text = "Kriva lozinka ili e-mail!",
+                color = Color.Red
+            )
+        }
         OutlinedButton(
             colors = ButtonDefaults.buttonColors(Color.White),
             onClick = {
                 if(viewModel.provjeriLogin(upisaniEmail,upisanaLozinka) == true)
-                navigiranjeEkrana.navigate("PredmetiEkran")
+                    navigiranjeEkrana.navigate("PredmetiEkran")
             },
             modifier = Modifier
                 .padding(bottom = 80.dp, top = 24.dp)

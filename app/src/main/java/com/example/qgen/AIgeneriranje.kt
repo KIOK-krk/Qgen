@@ -91,7 +91,11 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                     containerColor =Color(0xFF1c81b8)
                 )
             ) {
-                Text("Pitanje")
+                Text(
+                    "Pitanje",
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                )
                 OutlinedTextField(
                     value = "Koji je najbitniji dio kompjutera?",
                     onValueChange = {},
@@ -105,31 +109,31 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .defaultMinSize(minHeight = 60.dp)
-                        .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)
+                        .padding(start = 16.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)
                         .background(Color.White)
                 )
                 Text(
                     "Odgovor 1",
                     modifier = Modifier
-                        .padding(start = 2.dp)
+                        .padding(start = 16.dp)
                 )
                 PitanjeRow()
                 Text(
                     "Odgovor 2",
                     modifier = Modifier
-                        .padding(start = 2.dp)
+                        .padding(start = 16.dp)
                 )
                 PitanjeRow()
                 Text(
                     "Odgovor 3",
                     modifier = Modifier
-                        .padding(start = 2.dp)
+                        .padding(start = 16.dp)
                 )
                 PitanjeRow()
                 Text(
                     "Zanimljivost",
                     modifier = Modifier
-                        .padding(start = 2.dp)
+                        .padding(start = 16.dp)
                 )
 
                 OutlinedTextField(
@@ -145,7 +149,7 @@ fun AIgeneriranje(navigiranjeEkrana: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .defaultMinSize(minHeight = 150.dp)
-                        .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 8.dp)
+                        .padding(start = 16.dp, end = 8.dp, top = 4.dp, bottom = 8.dp)
                         .background(Color.White)
                 )
 

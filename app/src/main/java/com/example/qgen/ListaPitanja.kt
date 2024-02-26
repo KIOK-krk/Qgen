@@ -1,5 +1,6 @@
 package com.example.qgen
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -59,6 +61,7 @@ fun ListaPitanja(
     oznakaLekcije : String?,
     viewModel: ListaPitanjaViewModel = viewModel()
 ) {
+    val kontekst = LocalContext.current
     val pitanja = viewModel.svaPitanja.collectAsState().value.filter { it.idLekcije == idLekcija }
     Column (
         verticalArrangement = Arrangement.Top,
@@ -107,6 +110,17 @@ fun ListaPitanja(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .padding(start = 32.dp, bottom = 8.dp)
+                            .clickable {
+                                val sendIntent: Intent = Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(Intent.EXTRA_TEXT, "Hej, zelim podijeliti sa tobom " +
+                                            "ova pitanja za ponavljanje koja sam kreirao/la na Learn League " +
+                                            "Master aplikaciji. Kod je: " +oznakaLekcije + "-" + LogiraniKorisnik.oznakaLogiranogKorsinika)
+                                    type = "text/plain"
+                                }
+                                val shareIntent = Intent.createChooser(sendIntent, null)
+                                kontekst.startActivity(shareIntent)
+                            }
                     )
                 }
             }

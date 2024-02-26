@@ -11,6 +11,9 @@ class LoginViewModel() : ViewModel(){
     private val korisnici = MutableStateFlow<List<Korisnik>>(emptyList())
     val sviKorisnici: StateFlow<List<Korisnik>> = korisnici
 
+    private val _greska = MutableStateFlow<Boolean>(false)
+    val greska: StateFlow<Boolean> = _greska
+
     init {
         viewModelScope.launch {
             DataRepository.dohvatiKorisnike().collect { korisniciList ->
@@ -23,9 +26,11 @@ class LoginViewModel() : ViewModel(){
         for(korisnik in korisnici.value){
             if(korisnik.email == email && korisnik.lozinka == lozinka) {
                 LogiraniKorisnik.oznakaLogiranogKorsinika = korisnik.oznakaKorisnika
+                _greska.value = false
                 return true
             }
         }
+        _greska.value = true
         return false
     }
 }
