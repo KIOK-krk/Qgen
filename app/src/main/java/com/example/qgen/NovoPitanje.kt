@@ -51,7 +51,7 @@ fun NovoPitanje(
     var odgovor2Text by remember { mutableStateOf("") }
     var odgovor3Text by remember { mutableStateOf("") }
     var zanimljivostText by remember { mutableStateOf("") }
-    var odabranTocanOdgovor by remember { mutableStateOf(0) } // 0 znači da nijedan nije odabran
+    var odabranTocanOdgovor by remember { mutableStateOf(0) }
 
     NovoPitanjeGornjiBar(navigiranjeEkrana)
     Column(
@@ -125,7 +125,6 @@ fun NovoPitanje(
         Row {
             Button(
                 onClick = {
-                    // Logika za otkazivanje
                     navigiranjeEkrana.navigateUp()
                 },
                 colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),
@@ -136,16 +135,14 @@ fun NovoPitanje(
             }
             Button(
                 onClick = {
-                    // Ovdje dodajte logiku za spremanje novog pitanja
                     val novoPitanje = Pitanje(
                         tekstPitanja = pitanjeText,
                         odgovori = listOf(odgovor1Text, odgovor2Text, odgovor3Text),
-                        tocanOdgovor = odabranTocanOdgovor,
+                        tocanOdgovor = odabranTocanOdgovor + 1,
                         zanimljivost = zanimljivostText,
                         idLekcije = idLekcija ?: ""
-                        // Pretpostavljamo da idLekcije dolazi odnekud drugdje, treba ga dodati
                     )
-                    viewModel.dodajNovoPitanje(novoPitanje) // Pretpostavljamo postojanje ove funkcije u vašem ViewModel
+                    viewModel.dodajNovoPitanje(novoPitanje)
                     navigiranjeEkrana.navigateUp()
                 },
                 colors = ButtonDefaults.buttonColors(Color(0xFF1c81b8)),

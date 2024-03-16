@@ -39,16 +39,14 @@ class PredmetiViewModel : ViewModel(){
     fun dohvatiSveLekcije(){
         viewModelScope.launch {
             DataRepository.dohvatiLekcije().collect { lekcijeList ->
-                lekcije.value = lekcijeList //.filter { it.predmetID == predmetID && it.razred == razred }
+                lekcije.value = lekcijeList
             }
             Log.d("Lekcije", lekcije.value.toString())
         }
     }
     fun togglePredmetProsiren(predmetID: String) {
-        // Kreiranje privremene liste za ažurirane predmete
         val sviNoviPredmeti = mutableListOf<Predmet>()
 
-        // Iteracija kroz listu trenutnih predmeta
         for (predmet in predmeti.value) {
             if (predmet.idPredmeta == predmetID) {
                 // Ako je pronađen predmet s odgovarajućim ID-om, invertiramo njegovo prosireno stanje

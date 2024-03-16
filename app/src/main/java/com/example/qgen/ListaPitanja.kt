@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,7 +21,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -58,7 +56,8 @@ fun ListaPitanja(
     navigiranjeEkrana: NavHostController,
     naslov: String?,
     idLekcija: String?,
-    oznakaLekcije : String?,
+    oznakaLekcije: String?,
+    AIupute: String?,
     viewModel: ListaPitanjaViewModel = viewModel()
 ) {
     val kontekst = LocalContext.current
@@ -113,9 +112,11 @@ fun ListaPitanja(
                             .clickable {
                                 val sendIntent: Intent = Intent().apply {
                                     action = Intent.ACTION_SEND
-                                    putExtra(Intent.EXTRA_TEXT, "Hej, zelim podijeliti sa tobom " +
-                                            "ova pitanja za ponavljanje koja sam kreirao/la na Learn League " +
-                                            "Master aplikaciji. Kod je: " +oznakaLekcije + "-" + LogiraniKorisnik.oznakaLogiranogKorsinika)
+                                    putExtra(
+                                        Intent.EXTRA_TEXT, "Hej, zelim podijeliti sa tobom " +
+                                                "ova pitanja za ponavljanje koja sam kreirao/la na Learn League " +
+                                                "Master aplikaciji. Kod je: " + oznakaLekcije + "-" + LogiraniKorisnik.oznakaLogiranogKorsinika
+                                    )
                                     type = "text/plain"
                                 }
                                 val shareIntent = Intent.createChooser(sendIntent, null)
@@ -140,12 +141,15 @@ fun ListaPitanja(
         LazyColumn(verticalArrangement = Arrangement.Center) {
             items(pitanja) { pitanje ->
                 if (idLekcija != null) {
-                    NaslovPitanjeKartica(
-                        navigiranjeEkrana = navigiranjeEkrana,
-                        pitanje,
-                        idLekcija,
-                        viewModel
-                    )
+                    if (oznakaLekcije != null) {
+                        NaslovPitanjeKartica(
+                            navigiranjeEkrana = navigiranjeEkrana,
+                            pitanje,
+                            idLekcija,
+                            oznakaLekcije,
+                            viewModel
+                        )
+                    }
                 }
             }
         }
@@ -154,8 +158,8 @@ fun ListaPitanja(
         horizontalAlignment = Alignment.End
     ) {
         ExtendedFloatingActionButton(
-            containerColor = Color(0xFF1c81b8) ,
-            onClick = { navigiranjeEkrana.navigate("AIgeneriranje") },
+            containerColor = Color(0xFF1c81b8),
+            onClick = { navigiranjeEkrana.navigate("AIgeneriranje/${idLekcija}/${AIupute}/${oznakaLekcije}") },
             icon = {
                 Icon(
                     Icons.Filled.Add, null,
@@ -179,6 +183,7 @@ fun NaslovPitanjeKartica(
     navigiranjeEkrana: NavHostController,
     pitanje: Pitanje,
     idLekcija: String,
+    oznakaLekcije: String,
     viewModel: ListaPitanjaViewModel
 ) {
     var popupProsiren by remember { mutableStateOf(false) }
@@ -214,19 +219,22 @@ fun NaslovPitanjeKartica(
         }
     }
     if (popupProsiren == true) {
-        pitanjeKartica(pitanje, idLekcija, viewModel)
+        pitanjeKartica(pitanje, idLekcija, viewModel, oznakaLekcije)
     }
 }
 
 @Composable
-fun pitanjeKartica(pitanje: Pitanje, idLekcija: String, viewModel: ListaPitanjaViewModel) {
+fun pitanjeKartica(
+    pitanje: Pitanje, idLekcija:
+    String, viewModel: ListaPitanjaViewModel,
+    oznakaLekcije: String
+) {
     var pitanjeText by remember { mutableStateOf(pitanje.tekstPitanja) }
     var odgovor1Text by remember { mutableStateOf(pitanje.odgovori[0]) }
     var odgovor2Text by remember { mutableStateOf(pitanje.odgovori[1]) }
     var odgovor3Text by remember { mutableStateOf(pitanje.odgovori[2]) }
     var zanimljivostText by remember { mutableStateOf(pitanje.zanimljivost) }
-    var odabranTocanOdgovor by remember { mutableStateOf(pitanje.tocanOdgovor - 1) } // 0 znači da nijedan nije selektovan
-
+    var odabranTocanOdgovor by remember { mutableStateOf(pitanje.tocanOdgovor) }
     Box(
         modifier = Modifier
             .wrapContentSize()
@@ -298,10 +306,10 @@ fun pitanjeKartica(pitanje: Pitanje, idLekcija: String, viewModel: ListaPitanjaV
                         val azuriranoPitanje = Pitanje(
                             tekstPitanja = pitanjeText,
                             odgovori = listOf(odgovor1Text, odgovor2Text, odgovor3Text),
-                            tocanOdgovor = odabranTocanOdgovor + 1,
+                            tocanOdgovor = odabranTocanOdgovor,
                             zanimljivost = zanimljivostText,
-                            //autor = "Ažurirani Autor", // Pretpostavka da autor ostaje isti ili dodajte logiku za ažuriranje
-                            idLekcije = idLekcija // Pretpostavka da ID lekcije ostaje isti ili dodajte logiku za ažuriranje
+                            autor = oznakaLekcije + "-" + LogiraniKorisnik.oznakaLogiranogKorsinika,
+                            idLekcije = idLekcija
                         )
 
                         viewModel.azurirajPitanje(pitanje.idPitanja, azuriranoPitanje)

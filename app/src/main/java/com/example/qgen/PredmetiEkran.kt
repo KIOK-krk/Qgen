@@ -1,6 +1,5 @@
 package com.example.qgen
 
-import Lekcija
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -286,6 +285,7 @@ fun PredmetKartica(
     // Pretpostavimo da viewModel već prati prosireno stanje za svaki predmet
     val lekcije = viewModel.sveLekcije.collectAsState().value
         .filter { it.PredmetID == predmet.idPredmeta && it.Razred.contains(razred) }
+        .sortedBy { it.Naziv }
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -313,7 +313,8 @@ fun PredmetKartica(
                             nazivLekcije = lekcija.Naziv,
                             navigiranjeEkrana = navigiranjeEkrana,
                             idLekcije = lekcija.idLekcije,
-                            oznakaLekcije = lekcija.oznakaLekcije
+                            oznakaLekcije = lekcija.oznakaLekcije,
+                            AIupute = lekcija.AIupute
                         )
                     }
                 }
@@ -332,6 +333,7 @@ fun karticaLekcija(
     nazivLekcije: String,
     navigiranjeEkrana: NavHostController,
     idLekcije: String,
+    AIupute: String,
     oznakaLekcije: String
 ) {
     Card(
@@ -346,7 +348,7 @@ fun karticaLekcija(
             text = nazivLekcije,
             modifier = Modifier
                 .clickable {
-                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}/${oznakaLekcije}")
+                    navigiranjeEkrana.navigate("ListaPitanja/${nazivLekcije}/${idLekcije}/${AIupute}/${oznakaLekcije}")
                 }
                 .padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
                 .fillMaxWidth()

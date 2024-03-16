@@ -2,20 +2,16 @@ package com.example.qgen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -106,7 +102,7 @@ fun LoginEkran(
     ) {
         OutlinedTextField(
             value = upisaniEmail,
-            onValueChange = {upisaniEmail = it},
+            onValueChange = { upisaniEmail = it },
             textStyle = TextStyle(
                 color = Color.Black,
                 fontSize = 16.sp,
@@ -114,6 +110,7 @@ fun LoginEkran(
                 textAlign = TextAlign.Start
             ),
             label = { Text("E-Mail") },
+            singleLine = true,
             modifier = Modifier
                 .background(Color.White, RoundedCornerShape(40.dp))
                 .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
@@ -144,7 +141,7 @@ fun LoginEkran(
         OutlinedButton(
             colors = ButtonDefaults.buttonColors(Color.White),
             onClick = {
-                if(viewModel.provjeriLogin(upisaniEmail,upisanaLozinka) == true)
+                if (viewModel.provjeriLogin(upisaniEmail.trim(), upisanaLozinka.trim()) == true)
                     navigiranjeEkrana.navigate("PredmetiEkran")
             },
             modifier = Modifier

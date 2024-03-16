@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QgenTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -35,18 +34,30 @@ class MainActivity : ComponentActivity() {
 fun NavigiranjeEkrana() {
     val navigiranjeEkrana = rememberNavController()
     NavHost(navController = navigiranjeEkrana, startDestination = "LoginEkran") {
-        composable("AIgeneriranje") { AIgeneriranje(navigiranjeEkrana) }
+        composable("AIgeneriranje/{idLekcije}/{upute}/{oznakaLekcije}") { backStackEntry ->
+            AIgeneriranje(
+                navigiranjeEkrana,
+                idLekcije = backStackEntry.arguments?.getString("idLekcije"),
+                upute = backStackEntry.arguments?.getString("upute"),
+                oznakaLekcije = backStackEntry.arguments?.getString("oznakaLekcije")
+            )
+        }
         composable("PredmetiEkran") { PredmetiEkran(navigiranjeEkrana, prosireno = false) }
-        composable("ListaPitanja/{naslov}/{idLekcije}/{oznakaLekcije}") { backStackEntry ->
-            ListaPitanja(navigiranjeEkrana,
+        composable("ListaPitanja/{naslov}/{idLekcije}/{AIupute}/{oznakaLekcije}") { backStackEntry ->
+            ListaPitanja(
+                navigiranjeEkrana,
                 naslov = backStackEntry.arguments?.getString("naslov"),
                 idLekcija = backStackEntry.arguments?.getString("idLekcije"),
+                AIupute = backStackEntry.arguments?.getString("AIupute"),
                 oznakaLekcije = backStackEntry.arguments?.getString("oznakaLekcije")
             )
         }
         composable("LoginEkran") { LoginEkran(navigiranjeEkrana) }
-        composable("NovoPitanje/{idLekcije}") {backStackEntry ->
-            NovoPitanje(navigiranjeEkrana, idLekcija = backStackEntry.arguments?.getString("idLekcije"))
+        composable("NovoPitanje/{idLekcije}") { backStackEntry ->
+            NovoPitanje(
+                navigiranjeEkrana,
+                idLekcija = backStackEntry.arguments?.getString("idLekcije")
+            )
         }
     }
 }
