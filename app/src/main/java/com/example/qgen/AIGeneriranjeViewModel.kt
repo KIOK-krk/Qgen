@@ -53,6 +53,7 @@ class AIgeneriranjeViewModel() : ViewModel() {
                 token = "",
                 timeout = Timeout(socket = 60.seconds)
             )
+
             val chatCompletionRequest = ChatCompletionRequest(
                 model = ModelId("gpt-3.5-turbo"),
                 messages = listOf(
