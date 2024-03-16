@@ -27,7 +27,7 @@ class AIgeneriranjeViewModel() : ViewModel() {
 
     fun generirajPitanja2(AIupute: String) {
         val openai = OpenAI(
-            token = "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",
+            token = "",
             timeout = Timeout(socket = 60.seconds),
 
             )
@@ -50,7 +50,7 @@ class AIgeneriranjeViewModel() : ViewModel() {
     fun generirajPitanja(AIupute: String) {
         viewModelScope.launch {
             val openai = OpenAI(
-                token = "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",
+                token = "",
                 timeout = Timeout(socket = 60.seconds)
             )
             val chatCompletionRequest = ChatCompletionRequest(
