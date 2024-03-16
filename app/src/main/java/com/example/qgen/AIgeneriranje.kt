@@ -153,7 +153,6 @@ fun generiraneKartice(
                         Text(
                             "Odgovor 2", modifier = Modifier.padding(start = 16.dp)
                         )
-
                         if (it.tocanOdgovor == 2) oznaci = true
                         else oznaci = false
                         PitanjeRow(it.odgovori[1], oznaci)
