@@ -49,7 +49,6 @@ fun PredmetiEkran(
     viewModel: PredmetiViewModel = viewModel(),
     prosireno: Boolean
 ) {
-
     viewModel.dohvatiSveLekcije()
     val predmeti = viewModel.sviPredmet.collectAsState().value
     var razredprosiren by remember { mutableStateOf(false) }

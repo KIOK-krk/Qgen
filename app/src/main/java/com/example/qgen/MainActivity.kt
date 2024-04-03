@@ -42,7 +42,7 @@ fun NavigiranjeEkrana() {
                 oznakaLekcije = backStackEntry.arguments?.getString("oznakaLekcije")
             )
         }
-        composable("PredmetiEkran") { PredmetiEkran(navigiranjeEkrana, prosireno = false) }
+        composable("PredmetiSkenoviEkran") { PredmetiSkenoviEkran(navigiranjeEkrana) }
         composable("ListaPitanja/{naslov}/{idLekcije}/{AIupute}/{oznakaLekcije}") { backStackEntry ->
             ListaPitanja(
                 navigiranjeEkrana,

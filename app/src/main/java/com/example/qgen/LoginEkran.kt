@@ -142,7 +142,7 @@ fun LoginEkran(
             colors = ButtonDefaults.buttonColors(Color.White),
             onClick = {
                 if (viewModel.provjeriLogin(upisaniEmail.trim(), upisanaLozinka.trim()) == true)
-                    navigiranjeEkrana.navigate("PredmetiEkran")
+                    navigiranjeEkrana.navigate("PredmetiSkenoviEkran")
             },
             modifier = Modifier
                 .padding(bottom = 80.dp, top = 24.dp)
