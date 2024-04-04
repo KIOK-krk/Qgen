@@ -77,4 +77,5 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("com.aallam.openai:openai-client:3.7.0")
     implementation("io.ktor:ktor-client-android:2.3.9")
+    implementation ("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0-beta1")
 }
